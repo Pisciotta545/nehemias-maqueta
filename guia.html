@@ -15,7 +15,7 @@
   body{margin:0;background:var(--fondo);color:var(--texto);
     font-family:"Segoe UI",Roboto,system-ui,sans-serif;line-height:1.55;overflow-x:hidden;}
 
-  /* ===== Fondo animado (orbes) ===== */
+  /* ===== Fondo animado ===== */
   .bg{position:fixed;inset:0;z-index:-1;overflow:hidden;}
   .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:float 18s ease-in-out infinite;}
   .orb.a{width:420px;height:420px;background:#7000ff;top:-120px;left:-90px;}
@@ -25,12 +25,12 @@
 
   .wrap{max-width:680px;margin:0 auto;padding:0 18px;}
 
-  /* ===== Reveal al hacer scroll ===== */
+  /* ===== Reveal ===== */
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
   .reveal.vis{opacity:1;transform:none;}
 
   /* ===== HERO ===== */
-  .hero{text-align:center;padding:64px 0 34px;}
+  .hero{text-align:center;padding:60px 0 30px;}
   .logo{width:86px;height:86px;border-radius:24px;margin:0 auto 20px;
     background:linear-gradient(135deg,var(--morado),var(--cian));display:grid;place-items:center;font-size:44px;
     box-shadow:0 20px 55px #7000ff66;animation:pulse 3.5s ease-in-out infinite;}
@@ -42,22 +42,26 @@
     background-size:220% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
     animation:shine 6s linear infinite;}
   @keyframes shine{to{background-position:220% center;}}
-  .lead{color:var(--texto2);font-size:clamp(15px,4.3vw,18px);max-width:500px;margin:0 auto 28px;}
+  .lead{color:var(--texto2);font-size:clamp(15px,4.3vw,18px);max-width:500px;margin:0 auto 26px;}
   .lead b{color:#fff;}
-  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn{text-decoration:none;font-weight:700;font-size:15px;padding:14px 22px;border-radius:14px;
-    display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .2s,filter .2s;}
-  .btn.primary{color:#fff;background:linear-gradient(135deg,var(--morado),var(--cian));box-shadow:0 12px 30px #7000ff55;}
-  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px #7000ff88;filter:brightness(1.08);}
-  .btn.ghost{color:#fff;background:rgba(255,255,255,.05);border:1px solid var(--borde);}
-  .btn.ghost:hover{transform:translateY(-2px);border-color:var(--cian);}
+
+  /* Botones de descarga */
+  .stores{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .store{display:inline-flex;align-items:center;gap:11px;text-decoration:none;padding:11px 18px;border-radius:14px;
+    background:linear-gradient(135deg,var(--morado),var(--cian));color:#fff;box-shadow:0 12px 30px #7000ff55;
+    transition:transform .15s,box-shadow .2s,filter .2s;}
+  .store:hover{transform:translateY(-2px);box-shadow:0 16px 40px #7000ff88;filter:brightness(1.08);}
+  .store .sic{font-size:24px;line-height:1;}
+  .store small{font-size:10.5px;opacity:.85;display:block;letter-spacing:.3px;}
+  .store b{font-size:15.5px;line-height:1.15;}
+  .store.soon{background:rgba(255,255,255,.05);border:1px solid var(--borde);color:var(--texto2);box-shadow:none;cursor:default;}
+  .store.soon:hover{transform:none;filter:none;}
 
   /* ===== Secciones ===== */
   .seccion{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--cian);
     font-weight:700;margin:52px 4px 16px;text-align:center;}
   h2{font-size:clamp(23px,6vw,30px);margin:0 0 6px;font-weight:800;letter-spacing:-.5px;}
 
-  /* Tarjetas glass */
   .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
     border:1px solid var(--borde);border-radius:22px;padding:26px 24px 12px;margin-bottom:18px;
     backdrop-filter:blur(8px);position:relative;overflow:hidden;}
@@ -75,6 +79,31 @@
   p b,li b{color:var(--texto);}
   .q{color:var(--cian);font-weight:700;}
 
+  /* ===== Mockups de teléfono ===== */
+  .phones{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
+  .phone{width:190px;border:8px solid #241d36;border-radius:32px;background:#0D0A15;overflow:hidden;
+    box-shadow:0 26px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04);position:relative;}
+  .phone .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:70px;height:6px;
+    background:#241d36;border-radius:999px;z-index:2;}
+  .scr{height:360px;display:flex;flex-direction:column;}
+  .stbar{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 4px;font-size:10px;color:#9993ac;}
+  .appbar{padding:6px 14px 12px;font-weight:800;font-size:16px;}
+  .appbar.m{color:#fff;} .appbar.c{color:#fff;}
+  .scrbody{flex:1;padding:0 12px 12px;overflow:hidden;}
+  .mk{background:rgba(255,255,255,.045);border:1px solid var(--borde);border-radius:13px;padding:11px;margin-bottom:10px;}
+  .mk .t{font-size:12.5px;font-weight:700;color:#fff;}
+  .mk .s{font-size:11px;color:var(--texto2);margin-top:2px;}
+  .mk .row{display:flex;gap:7px;margin-top:9px;}
+  .chip{flex:1;text-align:center;font-size:11px;font-weight:700;padding:7px;border-radius:9px;}
+  .chip.ok{background:linear-gradient(135deg,#7000ff,#4DD0E1);color:#fff;}
+  .chip.no{background:rgba(255,255,255,.06);color:var(--texto2);}
+  .flyer{height:66px;border-radius:10px;margin-bottom:9px;background:linear-gradient(135deg,#7000ff,#E91E63);
+    display:flex;align-items:flex-end;padding:8px;font-size:11px;font-weight:800;color:#fff;}
+  .flyer.c2{background:linear-gradient(135deg,#4DD0E1,#7000ff);}
+  .nav{display:flex;justify-content:space-around;padding:9px 4px;border-top:1px solid var(--borde);font-size:15px;}
+  .nav span{opacity:.5;}.nav .on{opacity:1;}
+  .phone .cap{text-align:center;font-size:11.5px;color:var(--texto2);padding:8px 6px 2px;}
+
   /* Pasos */
   .mini{font-size:12.5px;font-weight:700;color:var(--cian);text-transform:uppercase;
     letter-spacing:.5px;margin:20px 0 4px;}
@@ -85,27 +114,34 @@
     display:grid;place-items:center;font-weight:800;font-size:15px;box-shadow:0 6px 16px #7000ff55;}
   .pasos li::after{content:"";position:absolute;left:16px;top:34px;bottom:6px;width:2px;
     background:linear-gradient(var(--morado),transparent);opacity:.4;}
-  .pasos li:last-child{padding-bottom:2px;}
-  .pasos li:last-child::after{display:none;}
+  .pasos li:last-child{padding-bottom:2px;}.pasos li:last-child::after{display:none;}
 
   /* Roles */
   .roles{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .rol{background:rgba(255,255,255,.03);border:1px solid var(--borde);border-radius:16px;padding:16px 14px;
     transition:transform .15s,border-color .2s;}
   .rol:hover{transform:translateY(-3px);}
-  .rol.r1:hover{border-color:var(--cian);}
-  .rol.r2:hover{border-color:var(--morado2);}
-  .rol.r3:hover{border-color:var(--rosa);}
-  .rol.r4:hover{border-color:var(--naranja);}
+  .rol.r1:hover{border-color:var(--cian);}.rol.r2:hover{border-color:var(--morado2);}
+  .rol.r3:hover{border-color:var(--rosa);}.rol.r4:hover{border-color:var(--naranja);}
   .rol .re{font-size:30px;}
   .rol .rt{font-weight:700;font-size:15.5px;margin-top:8px;}
   .rol .rd{font-size:13px;color:var(--texto2);margin-top:3px;line-height:1.45;}
 
+  /* FAQ */
+  details{background:rgba(255,255,255,.03);border:1px solid var(--borde);border-radius:14px;
+    padding:0 16px;margin-bottom:11px;transition:border-color .2s;}
+  details[open]{border-color:#7000ff66;}
+  summary{cursor:pointer;list-style:none;padding:15px 0;font-weight:700;font-size:15px;color:#fff;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"+";color:var(--cian);font-size:22px;font-weight:400;transition:transform .2s;}
+  details[open] summary::after{transform:rotate(45deg);}
+  details p{margin:0 0 16px;font-size:14px;}
+
   /* CTA final */
   .final{text-align:center;background:linear-gradient(135deg,rgba(112,0,255,.16),rgba(77,208,225,.1));
-    border:1px solid var(--borde);border-radius:26px;padding:38px 24px;margin:48px 0 10px;position:relative;overflow:hidden;}
-  .final h2{margin-bottom:8px;}
-  .final p{color:var(--texto2);max-width:440px;margin:0 auto 22px;}
+    border:1px solid var(--borde);border-radius:26px;padding:38px 24px;margin:48px 0 10px;}
+  .final h2{margin-bottom:8px;}.final p{color:var(--texto2);max-width:440px;margin:0 auto 22px;}
 
   .pie{text-align:center;color:#6f6a85;font-size:12.5px;margin:34px 0 46px;line-height:1.8;}
   .pie a{color:var(--cian);text-decoration:none;}
@@ -122,9 +158,11 @@
       <div class="badge">✨ Tu iglesia, en tu teléfono</div>
       <h1>Nehemías</h1>
       <p class="lead">Dos apps que trabajan juntas para <b>organizar tu ministerio</b> y <b>conectar a toda la congregación</b>. Una sola cuenta, todo en tu bolsillo.</p>
-      <div class="cta">
-        <a class="btn primary" href="#planificador">📋 Planificador</a>
-        <a class="btn ghost" href="#comunidad">⛪ Comunidad</a>
+      <div class="stores">
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.muralla.nehemias">
+          <span class="sic">▶</span><span><small>Disponible en</small><b>Google Play</b></span>
+        </a>
+        <span class="store soon"><span class="sic">⛪</span><span><small>Comunidad</small><b>Próximamente</b></span></span>
       </div>
     </header>
 
@@ -134,61 +172,79 @@
       <p>Nehemías son <b>dos aplicaciones</b> conectadas por una <b>misma cuenta</b>:</p>
       <p>📋 <b>Planificador</b> — organiza los <b>equipos de servicio</b> (como Multimedia): cultos, tareas y quién sirve en cada uno.</p>
       <p>⛪ <b>Comunidad</b> — la vida de <b>toda la iglesia</b>: eventos, avisos, miembros, bautismos y más.</p>
-      <p>Entrás <b>una sola vez</b> y cada app te muestra lo que te corresponde según tu rol. Así de simple. 🙌</p>
+      <p>Entrás <b>una sola vez</b> y cada app te muestra lo que te corresponde según tu rol. 🙌</p>
     </div>
+
+    <!-- MOCKUPS -->
+    <div class="seccion reveal">Así se ven</div>
+    <div class="phones reveal">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="appbar m">Servicio</div>
+          <div class="scrbody">
+            <div class="mk"><div class="t">Culto Domingo · Cámara 1</div><div class="s">Te asignaron a esta área</div>
+              <div class="row"><div class="chip ok">Aceptar</div><div class="chip no">Rechazar</div></div></div>
+            <div class="mk"><div class="t">Reunión Jueves · Sonido</div><div class="s">✓ Confirmado</div></div>
+          </div>
+          <div class="nav"><span class="on">🙌</span><span>📋</span><span>👤</span></div>
+        </div>
+      </div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="scr">
+          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="appbar c">Inicio</div>
+          <div class="scrbody">
+            <div class="mk"><div class="flyer">Noche de Alabanza</div><div class="t">Viernes 20 · 20:00 hs</div>
+              <div class="s">Toca compartir para invitar 📲</div></div>
+            <div class="mk"><div class="flyer c2">Ayuno General</div><div class="t">Sábado 21 · 08:00 hs</div></div>
+          </div>
+          <div class="nav"><span class="on">🏠</span><span>👨‍👩‍👧</span><span>👤</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;color:#6f6a85;font-size:12px;margin-top:6px" class="reveal">Izquierda: <b style="color:#B4B0C8">Planificador</b> · Derecha: <b style="color:#B4B0C8">Comunidad</b></p>
 
     <!-- APP 1 -->
     <div class="seccion reveal" id="planificador">App 1 · para servir en un equipo</div>
     <div class="card reveal">
-      <div class="head">
-        <div class="ic morado">📋</div>
-        <div>
-          <h2>Planificador</h2>
-          <span class="tag">Servidores y líderes de un ministerio</span>
-        </div>
-      </div>
-      <p><span class="q">¿Para qué sirve?</span> Para que un líder organice su ministerio: arma los <b>cultos/eventos</b>, reparte las <b>tareas</b> entre los servidores, administra el <b>equipo</b> y manda <b>avisos y notificaciones</b>.</p>
-
+      <div class="head"><div class="ic morado">📋</div><div><h2>Planificador</h2>
+        <span class="tag">Servidores y líderes de un ministerio</span></div></div>
+      <p><span class="q">¿Para qué sirve?</span> Para que un líder organice su ministerio: arma los <b>cultos</b>, reparte las <b>tareas</b> entre los servidores, administra el <b>equipo</b> y manda <b>avisos y notificaciones</b>.</p>
       <div class="mini">⚙️ Cómo funciona</div>
       <ol class="pasos">
-        <li>El <b>líder crea su ministerio</b> y queda como administrador del equipo.</li>
-        <li>Invita a los <b>servidores</b> por su correo electrónico.</li>
-        <li>Arma un <b>culto</b> y asigna a cada servidor su <b>área y posición</b>.</li>
-        <li>Cada servidor recibe una <b>notificación</b> y <b>confirma o rechaza</b> (dejando el motivo).</li>
-        <li>El líder ve las <b>métricas</b> de cada uno: cumplimiento, pendientes y rechazos.</li>
+        <li>El <b>líder crea su ministerio</b> y queda como administrador.</li>
+        <li>Invita a los <b>servidores</b> por su correo.</li>
+        <li>Arma un <b>culto</b> y asigna a cada uno su <b>área y posición</b>.</li>
+        <li>Cada servidor recibe una <b>notificación</b> y <b>confirma o rechaza</b>.</li>
+        <li>El líder ve las <b>métricas</b>: cumplimiento, pendientes y rechazos.</li>
       </ol>
-
       <div class="mini">🎧 Si sos servidor</div>
-      <p>Tres pestañas: <b>Servicio</b> (tus asignaciones, para aceptar o rechazar), <b>Tareas</b> y <b>Perfil</b>. Mirás lo que te toca y respondés.</p>
+      <p>Tres pestañas: <b>Servicio</b>, <b>Tareas</b> y <b>Perfil</b>. Mirás lo que te toca y respondés.</p>
       <div class="mini">📋 Si sos líder</div>
-      <p>Sumás <b>Cultos</b> (crear y organizar los servicios) y <b>Equipo</b> (invitar, ver rendimiento y gestionar áreas).</p>
+      <p>Sumás <b>Cultos</b> y <b>Equipo</b> (invitar, ver rendimiento y gestionar áreas).</p>
     </div>
 
     <!-- APP 2 -->
     <div class="seccion reveal" id="comunidad">App 2 · para toda la iglesia</div>
     <div class="card c-cian reveal">
-      <div class="head">
-        <div class="ic cian">⛪</div>
-        <div>
-          <h2>Comunidad</h2>
-          <span class="tag">Miembros, líderes y pastores</span>
-        </div>
-      </div>
-      <p><span class="q">¿Para qué sirve?</span> Para que <b>cada miembro</b> tenga la vida de la iglesia en el teléfono (eventos y avisos), y para que <b>líderes y pastores gestionen</b> la congregación: miembros, bautismos, presentaciones y grupo familiar.</p>
-
+      <div class="head"><div class="ic cian">⛪</div><div><h2>Comunidad</h2>
+        <span class="tag">Miembros, líderes y pastores</span></div></div>
+      <p><span class="q">¿Para qué sirve?</span> Para que <b>cada miembro</b> tenga la vida de la iglesia en el teléfono, y para que <b>líderes y pastores gestionen</b> la congregación: miembros, bautismos, presentaciones y grupo familiar.</p>
       <div class="mini">⚙️ Cómo funciona</div>
       <ol class="pasos">
         <li>Te registrás con <b>el nombre de tu iglesia</b>. Si la creás vos, quedás como <b>pastor</b>; si ya existe, entrás como <b>miembro</b>.</li>
-        <li>En <b>Inicio</b> ves los <b>eventos</b> de la congregación y te llega un aviso con cada uno nuevo.</li>
-        <li>Armás tu <b>grupo familiar</b> (cónyuge e hijos) desde tu perfil.</li>
-        <li>El equipo de <b>Multimedia</b> publica los eventos para toda la iglesia (¡con imagen!).</li>
-        <li>Los <b>líderes y pastores</b> entran a la <b>gestión</b>: miembros, bautismos y métricas de equipos.</li>
+        <li>En <b>Inicio</b> ves los <b>eventos</b> y te llega un aviso con cada uno nuevo.</li>
+        <li>Armás tu <b>grupo familiar</b> (cónyuge e hijos).</li>
+        <li>El equipo de <b>Multimedia</b> publica los eventos para toda la iglesia.</li>
+        <li>Los <b>líderes y pastores</b> entran a la <b>gestión</b> de la congregación.</li>
       </ol>
-
       <div class="mini">🙋 Si sos miembro</div>
-      <p>Ves los <b>eventos</b>, los <b>compartís</b> como imagen por WhatsApp y cargás a tu <b>familia</b>. Todo desde <b>Inicio</b>.</p>
+      <p>Ves los <b>eventos</b>, los <b>compartís</b> por WhatsApp y cargás a tu <b>familia</b>.</p>
       <div class="mini">👑 Si sos líder o pastor</div>
-      <p>Sumás la <b>Gestión</b> (miembros, bautismos, presentaciones) y los tableros de tu equipo. El pastor ve <b>todo</b>.</p>
+      <p>Sumás la <b>Gestión</b> y los tableros de tu equipo. El pastor ve <b>todo</b>.</p>
     </div>
 
     <!-- ROLES -->
@@ -203,24 +259,35 @@
       </div>
     </div>
 
+    <!-- FAQ -->
+    <div class="seccion reveal">Preguntas frecuentes</div>
+    <div class="reveal">
+      <details><summary>¿Es gratis?</summary><p>Sí, podés <b>empezar gratis</b>. Para equipos más grandes hay planes con más capacidad; los ves dentro de la app.</p></details>
+      <details><summary>¿Cómo me uno a mi iglesia?</summary><p>Al registrarte en <b>Comunidad</b> escribís el <b>nombre de tu iglesia</b>. Si ya está registrada, entrás como <b>miembro</b>; si sos el primero, la creás y quedás como <b>pastor</b>.</p></details>
+      <details><summary>¿Necesito las dos apps?</summary><p>No. Si solo <b>servís en un equipo</b>, con <b>Planificador</b> alcanza. <b>Comunidad</b> es para la vida de toda la iglesia. Muchos usan las dos con la misma cuenta.</p></details>
+      <details><summary>¿Funciona sin internet?</summary><p>Necesitás conexión para sincronizar, pero varias pantallas te muestran <b>lo último cargado</b> aunque estés sin señal por un rato.</p></details>
+      <details><summary>¿Cómo elimino mi cuenta y mis datos?</summary><p>Desde tu <b>Perfil → "Eliminar mis datos"</b>, o escribiéndonos a <a href="mailto:g.support.it1@gmail.com" style="color:var(--cian)">g.support.it1@gmail.com</a>.</p></details>
+    </div>
+
     <!-- CTA FINAL -->
     <div class="final reveal">
       <h2>Empezá hoy 🚀</h2>
       <p>Descargá la app, registrate con tu correo e iniciá sesión. La misma cuenta te sirve para las dos.</p>
-      <div class="cta">
-        <a class="btn primary" href="#planificador">Conocer las apps</a>
-        <a class="btn ghost" href="mailto:g.support.it1@gmail.com">Escribir a soporte</a>
+      <div class="stores">
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.muralla.nehemias">
+          <span class="sic">▶</span><span><small>Disponible en</small><b>Google Play</b></span>
+        </a>
+        <a class="store soon" href="mailto:g.support.it1@gmail.com" style="cursor:pointer">
+          <span class="sic">✉️</span><span><small>¿Dudas?</small><b>Soporte</b></span>
+        </a>
       </div>
     </div>
 
-    <p class="pie">
-      Nehemías · gestión de ministerios y congregación.<br>
-      ¿Dudas? <a href="mailto:g.support.it1@gmail.com">g.support.it1@gmail.com</a>
-    </p>
+    <p class="pie">Nehemías · gestión de ministerios y congregación.<br>
+      ¿Dudas? <a href="mailto:g.support.it1@gmail.com">g.support.it1@gmail.com</a></p>
   </div>
 
   <script>
-    // Aparición suave de las secciones al hacer scroll
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); }
