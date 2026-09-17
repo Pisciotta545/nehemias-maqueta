@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nehemías · Qué son las apps y cómo usarlas</title>
+<meta name="description" content="Guía de la suite Nehemías: qué son las dos apps (Planificador y Comunidad), cómo funcionan y cómo usarlas." />
+<style>
+  :root{
+    --fondo:#0D0A15; --superficie:#1A1525; --superficie2:#221C2B; --morado:#7000FF;
+    --cian:#4DD0E1; --texto:#FFFFFF; --texto2:#B0AEC4; --borde:#2a2440;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;min-height:100vh;background:
+      radial-gradient(900px 500px at 50% -10%, #2a1060 0%, rgba(42,16,96,0) 60%), var(--fondo);
+    color:var(--texto);font-family:"Segoe UI",Roboto,system-ui,sans-serif;
+    padding:34px 18px 60px;line-height:1.55;}
+  .wrap{max-width:640px;margin:0 auto;}
+
+  /* Cabecera */
+  .logo{width:78px;height:78px;border-radius:20px;margin:0 auto 16px;
+    background:linear-gradient(135deg,var(--morado),var(--cian));display:grid;place-items:center;font-size:40px;
+    box-shadow:0 14px 40px #7000ff55;}
+  h1{text-align:center;font-size:27px;margin:0 0 6px;}
+  .sub{text-align:center;color:var(--texto2);font-size:15px;margin:0 auto 26px;max-width:520px;}
+
+  /* Accesos rápidos (índice) */
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 30px;}
+  .nav a{font-size:13px;color:var(--cian);text-decoration:none;border:1px solid var(--borde);
+    border-radius:999px;padding:7px 13px;background:var(--superficie);transition:border-color .15s,background .15s;}
+  .nav a:hover{border-color:var(--morado);background:var(--superficie2);}
+
+  /* Secciones */
+  .seccion{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--cian);
+    font-weight:bold;margin:34px 4px 12px;}
+  h2{font-size:21px;margin:0 0 4px;}
+  .card{background:var(--superficie);border:1px solid var(--borde);border-radius:18px;
+    padding:20px 20px 6px;margin-bottom:16px;}
+  .card .head{display:flex;align-items:center;gap:14px;margin-bottom:8px;}
+  .card .ic{width:52px;height:52px;flex:0 0 52px;border-radius:14px;display:grid;place-items:center;font-size:27px;}
+  .card .tag{display:inline-block;font-size:11px;font-weight:bold;color:var(--texto2);
+    border:1px solid var(--borde);border-radius:999px;padding:3px 10px;margin-top:4px;}
+  p{color:var(--texto2);font-size:14.5px;margin:10px 0;}
+  p b, li b{color:var(--texto);}
+
+  /* Pasos numerados */
+  .pasos{list-style:none;counter-reset:paso;padding:0;margin:14px 0 6px;}
+  .pasos li{counter-increment:paso;position:relative;padding:0 0 14px 44px;color:var(--texto2);font-size:14.5px;}
+  .pasos li::before{content:counter(paso);position:absolute;left:0;top:-2px;width:30px;height:30px;
+    border-radius:50%;background:linear-gradient(135deg,var(--morado),var(--cian));color:#fff;
+    display:grid;place-items:center;font-weight:bold;font-size:14px;}
+  .pasos li:last-child{padding-bottom:2px;}
+
+  /* Mini-título dentro de tarjeta */
+  .mini{font-size:12.5px;font-weight:bold;color:var(--cian);text-transform:uppercase;
+    letter-spacing:.4px;margin:16px 0 2px;}
+
+  /* Roles */
+  .rol{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-top:1px solid var(--borde);}
+  .rol:first-child{border-top:none;}
+  .rol .re{font-size:22px;width:30px;flex:0 0 30px;text-align:center;}
+  .rol .rt{font-weight:bold;font-size:14.5px;color:var(--texto);}
+  .rol .rd{font-size:13px;color:var(--texto2);margin-top:1px;}
+
+  .pie{text-align:center;color:#6f6a85;font-size:12px;margin-top:34px;line-height:1.7;}
+  .pie a{color:var(--cian);text-decoration:none;}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo">⛪</div>
+    <h1>Nehemías</h1>
+    <p class="sub">Una suite con <b style="color:#fff">dos apps</b> para la vida de tu iglesia.
+      Acá te contamos <b style="color:#fff">para qué son</b>, <b style="color:#fff">cómo funcionan</b> y <b style="color:#fff">cómo usarlas</b>.</p>
+
+    <div class="nav">
+      <a href="#que-es">¿Qué es?</a>
+      <a href="#planificador">App Planificador</a>
+      <a href="#comunidad">App Comunidad</a>
+      <a href="#roles">Roles</a>
+      <a href="#empezar">Cómo empezar</a>
+    </div>
+
+    <!-- QUÉ ES -->
+    <div class="seccion" id="que-es">La idea general</div>
+    <div class="card">
+      <p>Nehemías son <b>dos aplicaciones</b> que trabajan juntas sobre una <b>misma cuenta</b>:</p>
+      <div class="mini">📋 Nehemías Planificador</div>
+      <p style="margin-top:4px">Para <b>organizar los equipos de servicio</b> (por ejemplo Multimedia): cultos, tareas y quién sirve en cada uno.</p>
+      <div class="mini">⛪ Nehemías Comunidad</div>
+      <p style="margin-top:4px">Para <b>toda la congregación</b>: eventos, avisos, miembros, bautismos y más.</p>
+      <p>Tu <b>usuario y contraseña son los mismos</b> en las dos: entrás una vez y cada app te muestra lo que te corresponde según tu rol.</p>
+    </div>
+
+    <!-- APP 1 -->
+    <div class="seccion" id="planificador">App 1 · para servir en un equipo</div>
+    <div class="card">
+      <div class="head">
+        <div class="ic" style="background:#7000FF22">📋</div>
+        <div>
+          <h2>Nehemías Planificador</h2>
+          <span class="tag">Para servidores y líderes de un ministerio</span>
+        </div>
+      </div>
+      <p><b>¿Para qué sirve?</b> Para que un líder organice su ministerio: arma los <b>cultos/eventos</b>, reparte las <b>tareas</b> entre los servidores, administra el <b>equipo</b> y manda <b>avisos y notificaciones</b>.</p>
+
+      <div class="mini">Cómo funciona</div>
+      <ol class="pasos">
+        <li>El <b>líder crea su ministerio</b> y queda como administrador del equipo.</li>
+        <li>Invita a los <b>servidores</b> por su correo electrónico.</li>
+        <li>Arma un <b>culto o evento</b> y asigna a cada servidor su <b>área y posición</b>.</li>
+        <li>Cada servidor recibe una <b>notificación</b> y <b>confirma o rechaza</b> (si rechaza, deja el motivo).</li>
+        <li>El líder ve en el <b>Equipo</b> las <b>métricas</b> de cada uno: cumplimiento, pendientes y rechazos.</li>
+      </ol>
+
+      <div class="mini">Cómo la usás si sos servidor</div>
+      <p>Entrás y tenés tres pestañas: <b>Servicio</b> (tus asignaciones, para aceptar o rechazar), <b>Tareas</b> y <b>Perfil</b>. Simple: mirás lo que te toca y respondés.</p>
+
+      <div class="mini">Cómo la usás si sos líder</div>
+      <p>Además de lo anterior, tenés <b>Cultos</b> (crear y organizar los servicios) y <b>Equipo</b> (invitar servidores, ver el rendimiento y gestionar las áreas).</p>
+    </div>
+
+    <!-- APP 2 -->
+    <div class="seccion" id="comunidad">App 2 · para toda la iglesia</div>
+    <div class="card">
+      <div class="head">
+        <div class="ic" style="background:#4DD0E122">⛪</div>
+        <div>
+          <h2>Nehemías Comunidad</h2>
+          <span class="tag">Para todos los miembros, líderes y pastores</span>
+        </div>
+      </div>
+      <p><b>¿Para qué sirve?</b> Para que <b>cada miembro</b> tenga la vida de la iglesia en el teléfono (eventos y avisos), y para que <b>líderes y pastores gestionen</b> la congregación: miembros, bautismos, presentaciones de niños, grupo familiar y más.</p>
+
+      <div class="mini">Cómo funciona</div>
+      <ol class="pasos">
+        <li>Te registrás indicando <b>el nombre de tu iglesia</b>. Si la iglesia todavía no existe y la creás vos, quedás como <b>pastor</b>; si ya existe, entrás como <b>miembro</b>.</li>
+        <li>En <b>Inicio</b> ves los <b>eventos de la congregación</b> y recibís un aviso cuando publican uno nuevo.</li>
+        <li>Armás tu <b>grupo familiar</b> (cónyuge e hijos) desde tu perfil.</li>
+        <li>El equipo de <b>Multimedia</b> es el que <b>publica los eventos</b> para toda la iglesia (con imagen incluida).</li>
+        <li>Los <b>líderes y pastores</b> acceden a la <b>gestión</b>: lista de miembros, bautismos, presentaciones y métricas de los equipos.</li>
+      </ol>
+
+      <div class="mini">Cómo la usás si sos miembro</div>
+      <p>Ves los <b>eventos</b> y avisos, podés <b>compartir</b> un evento como imagen por WhatsApp, y cargás a tu <b>familia</b>. Todo desde la pantalla de <b>Inicio</b>.</p>
+
+      <div class="mini">Cómo la usás si sos líder o pastor</div>
+      <p>Sumás las secciones de <b>Gestión</b> (miembros, bautismos, presentaciones) y los tableros de <b>tu equipo</b>. El <b>pastor</b> ve <b>todo</b> el panel de la iglesia.</p>
+
+      <p style="font-size:13px;color:#6f6a85;margin-top:14px">💡 Las <b>tareas y servicios</b> se aceptan en la app <b>Planificador</b>, no acá: Comunidad es para la vida de la iglesia, no para confirmar servicios.</p>
+    </div>
+
+    <!-- ROLES -->
+    <div class="seccion" id="roles">Los roles (se acumulan)</div>
+    <div class="card">
+      <p>Una misma persona puede tener varios roles a la vez. Según los que tengas, ves más o menos cosas:</p>
+      <div class="rol"><div class="re">🙋</div><div><div class="rt">Miembro</div><div class="rd">Cualquier integrante de la congregación. Ve eventos, avisos y su grupo familiar.</div></div></div>
+      <div class="rol"><div class="re">🎧</div><div><div class="rt">Servidor</div><div class="rd">Sirve en un equipo (ej. Multimedia). Usa el Planificador para aceptar sus tareas.</div></div></div>
+      <div class="rol"><div class="re">📋</div><div><div class="rt">Líder</div><div class="rd">Dirige un equipo: arma cultos, asigna tareas y ve las métricas de su gente.</div></div></div>
+      <div class="rol"><div class="re">👑</div><div><div class="rt">Pastor</div><div class="rd">Ve toda la iglesia: gestión de miembros, bautismos y el panel completo.</div></div></div>
+    </div>
+
+    <!-- EMPEZAR -->
+    <div class="seccion" id="empezar">Cómo empezar</div>
+    <div class="card">
+      <ol class="pasos">
+        <li><b>Descargá la app</b> en tu celular (Planificador si vas a servir en un equipo; Comunidad para la vida de la iglesia).</li>
+        <li><b>Registrate</b> con tu correo. Si sos líder, creás tu ministerio; si te invitaron, entrás con el correo invitado.</li>
+        <li><b>Iniciá sesión</b> una sola vez: la misma cuenta te sirve para las dos apps.</li>
+        <li>Listo: cada app te muestra lo tuyo según tu <b>rol</b>.</li>
+      </ol>
+    </div>
+
+    <p class="pie">
+      Nehemías · gestión de ministerios y congregación.<br>
+      ¿Dudas? Escribinos a <a href="mailto:g.support.it1@gmail.com">g.support.it1@gmail.com</a>
+    </p>
+  </div>
+</body>
+</html>
