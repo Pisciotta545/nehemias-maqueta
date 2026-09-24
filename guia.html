@@ -159,6 +159,11 @@
     border-radius:8px;padding:8px 0;font-size:11.5px;font-weight:800;color:#fff;}
   .ddsel{display:flex;justify-content:space-between;align-items:center;}
   .ddsel::after{content:"▾";color:var(--cian);font-size:13px;}
+  .soonbox{text-align:center;background:linear-gradient(135deg,rgba(77,208,225,.12),rgba(112,0,255,.10));
+    border:1px solid var(--borde);border-radius:22px;padding:46px 24px;margin-bottom:18px;}
+  .soonbox .soonic{font-size:52px;margin-bottom:10px;}
+  .soonbox h2{margin:0 0 8px;}
+  .soonbox p{color:var(--texto2);max-width:420px;margin:0 auto 20px;}
   .pie{text-align:center;color:#6f6a85;font-size:12px;margin:30px 0 44px;line-height:1.8;}
   .pie a{color:var(--cian);text-decoration:none;}
 </style>
@@ -361,75 +366,18 @@
     </section>
 
     <!-- ================= PANEL COMUNIDAD ================= -->
+    <!-- ⚠️ Contenido completo (Inicio / Grupo familiar / Gestión) respaldado en
+         prototipos/comunidad_panel_backup.html. Restaurar cuando la App 2 esté lista. -->
     <section class="panel" id="comunidad">
       <div class="card">
         <div class="head"><div class="ic cian">⛪</div><div><h2>Comunidad</h2>
-          <span class="tag">Para todos: miembros, líderes y pastores</span></div></div>
-        <p>La app de <b>toda la congregación</b>: cada miembro tiene los eventos y avisos en el teléfono, arma su familia, y los líderes/pastores gestionan la iglesia (miembros, bautismos y más).</p>
+          <span class="tag">Para toda la congregación</span></div></div>
+        <p>La app de <b>toda la iglesia</b> (eventos, avisos, miembros, bautismos, grupo familiar y más) está <b>en desarrollo</b>.</p>
       </div>
-
-      <!-- Inicio -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Inicio</div>
-          <div class="scrbody">
-            <div class="mk"><div class="flyer">Noche de Alabanza</div><div class="t">Viernes 20 · 20:00 hs</div>
-              <div class="row"><div class="chip ok">📲 Compartir</div></div></div>
-            <div class="mk"><div class="flyer c2">Ayuno General</div><div class="t">Sábado 21 · 08:00 hs</div></div>
-          </div>
-          <div class="nav"><span class="on">🏠</span><span>👨‍👩‍👧</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">Pantalla: Inicio</span>
-          <h3>Enterate y compartí los eventos</h3>
-          <p>Ves los <b>eventos de la iglesia</b> con su flyer, y te llega un <b>aviso</b> cuando publican uno nuevo. Con un toque lo compartís como imagen.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> ves la <b>Noche de Alabanza</b>, tocás <b>Compartir</b> y lo mandás al grupo de WhatsApp con la foto y la fecha.</div>
-        </div>
-      </div>
-
-      <!-- Grupo familiar -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Mi familia</div>
-          <div class="scrbody">
-            <div class="li"><div class="av">A</div><div class="ln"><div class="nm">Ana</div><div class="s" style="font-size:10px">Esposa · aniversario 💍</div></div></div>
-            <div class="li"><div class="av">L</div><div class="ln"><div class="nm">Lucas</div><div class="s" style="font-size:10px">Hijo · 8 años · Escuelita</div></div></div>
-            <div class="li"><div class="av">S</div><div class="ln"><div class="nm">Sofía</div><div class="s" style="font-size:10px">Hija · 5 años · Escuelita</div></div></div>
-            <div class="mk" style="text-align:center;color:#4DD0E1;font-weight:700;font-size:11.5px">+ Agregar integrante</div>
-          </div>
-          <div class="nav"><span>🏠</span><span class="on">👨‍👩‍👧</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">Pantalla: Grupo familiar</span>
-          <h3>Cargá a tu familia</h3>
-          <p>Sumás a tu <b>cónyuge</b> (con el aniversario) e <b>hijos</b> (con la edad). Cada hijo queda clasificado solo en su grupo: Escuelita, Jóvenes, etc.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> cargás a <b>Lucas (8)</b> y automáticamente aparece en el grupo de <b>Escuelita</b> para su líder.</div>
-        </div>
-      </div>
-
-      <!-- Gestión -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Gestión</div>
-          <div class="scrbody">
-            <div class="mk"><div class="t">👥 Miembros</div><div class="s">128 registrados</div></div>
-            <div class="mk"><div class="t">💧 Bautismos</div><div class="s">12 este año</div></div>
-            <div class="mk"><div class="t">👶 Presentaciones</div><div class="s">5 este año · certificado listo</div></div>
-          </div>
-          <div class="nav"><span>🏠</span><span class="on">🗂️</span><span>📊</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">Pantalla: Gestión (líder/pastor)</span>
-          <h3>Administrá la congregación</h3>
-          <p>Líderes y pastores acceden a <b>miembros, bautismos y presentaciones</b> con sus reportes por mes y año. Al registrar un bautismo o presentación se arma el <b>certificado</b> solo.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> registrás un <b>bautismo</b> y la app genera el <b>certificado con el sello de la iglesia</b> listo para descargar.</div>
-        </div>
-      </div>
-
-      <div class="stores">
+      <div class="soonbox">
+        <div class="soonic">🚧</div>
+        <h2>Próximamente</h2>
+        <p>Estamos construyendo <b>Nehemías Comunidad</b>. Muy pronto vas a tener toda la vida de la iglesia en tu teléfono.</p>
         <span class="store soon"><span class="sic">⛪</span><span><small>Comunidad</small><b>Próximamente</b></span></span>
       </div>
     </section>
@@ -438,38 +386,39 @@
     <section class="panel" id="ingreso">
       <div class="card">
         <div class="head"><div class="ic rosa">🔑</div><div><h2>Ingreso</h2>
-          <span class="tag">Una sola cuenta para las dos apps</span></div></div>
-        <p>Te registrás <b>una vez</b> y con ese mismo usuario entrás a las dos apps. Cada una te muestra lo que te corresponde según tu rol.</p>
+          <span class="tag">Iniciá sesión en Nehemías Planificador</span></div></div>
+        <p>Con tu <b>correo y contraseña</b> entrás a la app. Según tu rol, te muestra tus pestañas: servidor o líder.</p>
       </div>
 
       <div class="feature">
         <div class="phone"><div class="notch"></div><div class="scr">
           <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
           <div class="scrbody center">
-            <div class="plogo">⛪</div>
-            <div style="font-weight:800;font-size:15px;margin-bottom:12px">Nehemías</div>
-            <div class="field">📧 correo@iglesia.com</div>
-            <div class="field">🔒 ••••••••</div>
-            <div class="btnm">INGRESAR</div>
+            <div class="plogo" style="background:#fff;overflow:hidden"><img src="logo_nehemias.png" alt="Nehemías" style="width:100%;height:100%;object-fit:contain" /></div>
+            <div style="font-weight:800;font-size:15px;margin:6px 0 12px">Nehemías</div>
+            <div class="field">Correo electrónico</div>
+            <div class="field">🔒 Contraseña</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:10.5px;color:#B4B0C8;margin:2px 2px 10px"><span style="width:13px;height:13px;border:1px solid #7000FF;border-radius:3px;display:inline-block"></span> Recordarme</div>
+            <div class="btnm">INICIA SESIÓN</div>
             <div class="lnk">¿Olvidaste tu contraseña?</div>
-            <div class="lnk" style="margin-top:14px;color:#B4B0C8">¿No tenés cuenta? <b style="color:#7000FF">Registrate</b></div>
+            <div class="lnk" style="margin-top:12px;color:#B4B0C8">¿No tenés cuenta? <b style="color:#7000FF">Regístrate aquí</b></div>
+            <div class="lnk" style="margin-top:8px;color:#7000FF;font-weight:700">Registrar mi Ministerio (Líderes)</div>
           </div>
         </div></div>
         <div class="ftxt">
           <span class="n">Pantalla: Ingreso</span>
           <h3>Cómo entrás</h3>
-          <p>Ponés tu <b>correo y contraseña</b> y listo. Podés activar <b>"Recordarme"</b> para no volver a escribirlos.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> si ya sos servidor en el Planificador, con <b>esa misma cuenta</b> entrás a Comunidad y ya aparecés con tu rol.</div>
+          <p>Ponés tu <b>correo y contraseña</b> y tocás <b>INICIA SESIÓN</b>. Podés activar <b>"Recordarme"</b> para no volver a escribirlos la próxima vez.</p>
+          <div class="ej"><b>💡 Ejemplo:</b> como <b>servidor</b> entrás y ves tus pestañas <b>Servicio</b>, <b>Tareas</b> y <b>Perfil</b>; como <b>líder</b> sumás <b>Cultos</b> y <b>Equipo</b>.</div>
         </div>
       </div>
 
       <div class="card">
         <h3 style="margin:0 0 10px;font-size:16px">Formas de registrarse</h3>
         <ol class="pasos">
-          <li><b>Líder → creá tu ministerio.</b> En el Planificador tocás <b>"Registrar mi Ministerio"</b> y quedás como administrador del equipo.</li>
-          <li><b>Servidor → por invitación.</b> El líder te invita con tu correo; al registrarte con ese mismo correo entrás directo al equipo.</li>
-          <li><b>Miembro → por tu iglesia.</b> En Comunidad ponés el <b>nombre de tu iglesia</b>. Si ya existe, entrás como miembro; si sos el primero, la creás y quedás como pastor.</li>
-          <li><b>¿Olvidaste la clave?</b> Pedís el código a tu correo y creás una nueva contraseña.</li>
+          <li><b>Líder → creá tu ministerio.</b> Tocás <b>"Registrar mi Ministerio (Líderes)"</b> y quedás como administrador de tu equipo.</li>
+          <li><b>Servidor → por invitación.</b> El líder te invita con tu correo; te registrás en <b>"Regístrate aquí"</b> con ese mismo correo y entrás directo al equipo.</li>
+          <li><b>¿Olvidaste la clave?</b> Tocás <b>"¿Olvidaste tu contraseña?"</b>, pedís el código a tu correo y creás una nueva.</li>
         </ol>
       </div>
 
