@@ -192,6 +192,23 @@
   .llink{color:var(--cian);cursor:pointer;font-weight:700;}
   .lmsg{font-size:12px;margin:10px 0 2px;min-height:15px;text-align:center;line-height:1.4;}
   .lmsg.ok{color:#4DD0E1;} .lmsg.err{color:#ff7a90;}
+  /* Sección destacada: app web */
+  .importante{text-align:center;border-radius:22px;padding:30px 22px 26px;margin:22px 0;
+    background:linear-gradient(135deg,rgba(112,0,255,.22),rgba(77,208,225,.14));
+    border:1.5px solid #7000ff88;box-shadow:0 14px 44px #7000ff33;}
+  .imp-badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;color:#fff;
+    background:linear-gradient(135deg,var(--morado),var(--cian));border-radius:999px;padding:6px 16px;margin-bottom:12px;
+    box-shadow:0 8px 22px #7000ff66;animation:pulse 2.5s ease-in-out infinite;}
+  .importante h2{font-size:clamp(20px,5.5vw,26px);margin:0 0 10px;}
+  .importante p{color:var(--texto2);font-size:14.5px;margin:8px auto;max-width:490px;}
+  .importante p b{color:#fff;}
+  .imp-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 20px;}
+  .imp-item{background:rgba(255,255,255,.05);border:1px solid var(--borde);border-radius:12px;
+    padding:9px 13px;font-size:13px;font-weight:600;color:#fff;}
+  .btn-web{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:15px;
+    padding:14px 26px;border-radius:14px;color:#fff;background:linear-gradient(135deg,var(--morado),var(--cian));
+    box-shadow:0 12px 30px #7000ff66;transition:transform .15s,filter .2s;}
+  .btn-web:hover{transform:translateY(-2px);filter:brightness(1.08);}
   .pie{text-align:center;color:#6f6a85;font-size:12px;margin:30px 0 44px;line-height:1.8;}
   .pie a{color:var(--cian);text-decoration:none;}
 </style>
@@ -469,6 +486,20 @@
       </div>
 
       <p class="loginnote">Se conecta con Nehemías de verdad. Si iniciás sesión o creás un ministerio, tu cuenta queda lista para usar la app.</p>
+
+      <div class="importante">
+        <div class="imp-badge">⚡ IMPORTANTE</div>
+        <h2>En Nehemías pensamos en todo 💜</h2>
+        <p>¿Poco espacio en el teléfono? ¿Te quedaste sin celular a mano? ¿Tenés un iPhone?</p>
+        <p><b>No importa el dispositivo.</b> Nehemías también es una <b>app web</b>: es <b>exactamente la misma app</b>, sin instalar nada y sin ocupar memoria. La tenés donde quieras.</p>
+        <div class="imp-list">
+          <div class="imp-item">💻 En tu PC o notebook</div>
+          <div class="imp-item">📱 En cualquier Android</div>
+          <div class="imp-item">🍎 En iPhone o iPad</div>
+          <div class="imp-item">🌐 En cualquier navegador</div>
+        </div>
+        <a class="btn-web" href="https://nehemias-cartero.onrender.com/" target="_blank" rel="noopener">🌐 Abrir la app web</a>
+      </div>
 
       <div class="card">
         <h3 style="margin:0 0 10px;font-size:16px">Formas de registrarse</h3>
