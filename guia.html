@@ -31,8 +31,14 @@
     box-shadow:0 18px 48px #7000ff66;animation:pulse 3.5s ease-in-out infinite;}
   .logo img{width:100%;height:100%;object-fit:contain;display:block;}
   .acerca{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
-    border:1px solid var(--borde);border-radius:18px;padding:20px 20px 16px;margin:8px auto 18px;
+    border:1px solid var(--borde);border-radius:18px;padding:0 20px;margin:8px auto 18px;
     max-width:560px;text-align:left;}
+  .acerca summary{cursor:pointer;list-style:none;padding:15px 2px;font-weight:700;color:#fff;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px;}
+  .acerca summary::-webkit-details-marker{display:none;}
+  .acerca summary::after{content:"+";color:var(--cian);font-size:22px;font-weight:400;line-height:1;}
+  .acerca[open] summary::after{content:"−";}
+  .acerca-body{padding-bottom:16px;}
   .acerca p{color:var(--texto2);font-size:14px;line-height:1.6;margin:0 0 12px;}
   .acerca .cita{color:var(--morado2);font-style:italic;font-weight:700;text-align:center;font-size:15px;margin-top:16px;}
   .acerca .ref{color:var(--morado2);font-weight:700;text-align:center;font-size:13px;margin:0;}
@@ -119,7 +125,10 @@
   .field{background:rgba(255,255,255,.05);border:1px solid var(--borde);border-radius:9px;
     padding:10px 11px;font-size:11px;color:var(--texto2);margin-bottom:9px;}
   .btnm{background:linear-gradient(135deg,#7000ff,#4DD0E1);color:#fff;text-align:center;
-    font-weight:800;font-size:12px;padding:11px;border-radius:9px;margin-top:2px;}
+    font-weight:800;font-size:12px;padding:11px;border-radius:9px;margin-top:2px;
+    border:none;cursor:pointer;width:100%;font-family:inherit;letter-spacing:.5px;transition:filter .15s;}
+  .btnm:hover{filter:brightness(1.08);}
+  .btnm:disabled{opacity:.6;cursor:default;}
   .lnk{text-align:center;font-size:10.5px;color:#4DD0E1;margin-top:10px;}
   .nav{display:flex;justify-content:space-around;padding:9px 4px;border-top:1px solid var(--borde);font-size:15px;}
   .nav span{opacity:.5;}.nav .on{opacity:1;}
@@ -164,6 +173,25 @@
   .soonbox .soonic{font-size:52px;margin-bottom:10px;}
   .soonbox h2{margin:0 0 8px;}
   .soonbox p{color:var(--texto2);max-width:420px;margin:0 auto 20px;}
+  /* Login funcional (pestaña Ingreso) */
+  .loginhint{text-align:center;color:var(--texto2);font-size:14px;margin:0 auto 6px;max-width:520px;}
+  .loginhint b{color:#fff;}
+  .loginnote{text-align:center;color:#8f89a3;font-size:12px;margin:12px auto 4px;max-width:480px;line-height:1.5;}
+  .phone-login{width:300px;max-width:100%;margin:14px auto;border:8px solid #241d36;border-radius:32px;
+    background:#0D0A15;overflow:hidden;box-shadow:0 26px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04);position:relative;}
+  .phone-login .scr{min-height:auto;padding-bottom:14px;}
+  .lview{padding-top:6px;}
+  .ltitle{font-weight:800;font-size:16px;margin:4px 0 12px;text-align:center;}
+  .lsub{font-size:11.5px;color:var(--texto2);text-align:center;margin:-6px 0 12px;}
+  .finput{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--borde);border-radius:9px;
+    padding:11px 12px;font-size:13px;color:#fff;margin-bottom:9px;font-family:inherit;}
+  .finput::placeholder{color:#8f89a3;}
+  .finput:focus{outline:none;border-color:var(--morado2);}
+  .lcheck{display:flex;align-items:center;gap:7px;font-size:11.5px;color:#B4B0C8;margin:2px 2px 11px;cursor:pointer;}
+  .lcheck input{accent-color:#7000FF;width:14px;height:14px;}
+  .llink{color:var(--cian);cursor:pointer;font-weight:700;}
+  .lmsg{font-size:12px;margin:10px 0 2px;min-height:15px;text-align:center;line-height:1.4;}
+  .lmsg.ok{color:#4DD0E1;} .lmsg.err{color:#ff7a90;}
   .pie{text-align:center;color:#6f6a85;font-size:12px;margin:30px 0 44px;line-height:1.8;}
   .pie a{color:var(--cian);text-decoration:none;}
 </style>
@@ -175,14 +203,17 @@
     <header class="hero">
       <div class="logo"><img id="heroLogo" src="logo_nehemias.png" alt="Logo Nehemías" /></div>
       <h1>Nehemías</h1>
-      <div class="acerca">
-        <p>Nehemías fue creado con el propósito de organizar, planificar y bendecir a los equipos de servicio de la iglesia.</p>
-        <p>Así como Nehemías planificó la reconstrucción de los muros de Jerusalén con orden y dedicación, esta herramienta busca que cada servidor pueda dar lo mejor de sí para Dios, sin estrés y con claridad.</p>
-        <p>Él se dio cuenta de que no podía reconstruir un muro gigante solo. Si leés el capítulo 3 de la Biblia, es literalmente una planilla de asignaciones: dividió el trabajo entre familias y grupos específicos para reconstruir el muro.</p>
-        <p>Nosotros hoy tenemos, mediante esta asignación, la decisión de levantarnos y edificar en la obra de Dios.</p>
-        <p class="cita">"El Dios del cielo, él nos prosperará, y nosotros sus siervos nos levantaremos y edificaremos."</p>
-        <p class="ref">— Nehemías 2:20</p>
-      </div>
+      <details class="acerca">
+        <summary>📖 Acerca de Nehemías</summary>
+        <div class="acerca-body">
+          <p>Nehemías fue creado con el propósito de organizar, planificar y bendecir a los equipos de servicio de la iglesia.</p>
+          <p>Así como Nehemías planificó la reconstrucción de los muros de Jerusalén con orden y dedicación, esta herramienta busca que cada servidor pueda dar lo mejor de sí para Dios, sin estrés y con claridad.</p>
+          <p>Él se dio cuenta de que no podía reconstruir un muro gigante solo. Si leés el capítulo 3 de la Biblia, es literalmente una planilla de asignaciones: dividió el trabajo entre familias y grupos específicos para reconstruir el muro.</p>
+          <p>Nosotros hoy tenemos, mediante esta asignación, la decisión de levantarnos y edificar en la obra de Dios.</p>
+          <p class="cita">"El Dios del cielo, él nos prosperará, y nosotros sus siervos nos levantaremos y edificaremos."</p>
+          <p class="ref">— Nehemías 2:20</p>
+        </div>
+      </details>
       <p class="lead">Elegí una pestaña y mirá por dentro cada app, con ejemplos.</p>
     </header>
 
@@ -390,28 +421,54 @@
         <p>Con tu <b>correo y contraseña</b> entrás a la app. Según tu rol, te muestra tus pestañas: servidor o líder.</p>
       </div>
 
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="scrbody center">
-            <div class="plogo" style="background:#fff;overflow:hidden"><img src="logo_nehemias.png" alt="Nehemías" style="width:100%;height:100%;object-fit:contain" /></div>
-            <div style="font-weight:800;font-size:15px;margin:6px 0 12px">Nehemías</div>
-            <div class="field">Correo electrónico</div>
-            <div class="field">🔒 Contraseña</div>
-            <div style="display:flex;align-items:center;gap:6px;font-size:10.5px;color:#B4B0C8;margin:2px 2px 10px"><span style="width:13px;height:13px;border:1px solid #7000FF;border-radius:3px;display:inline-block"></span> Recordarme</div>
-            <div class="btnm">INICIA SESIÓN</div>
-            <div class="lnk">¿Olvidaste tu contraseña?</div>
-            <div class="lnk" style="margin-top:12px;color:#B4B0C8">¿No tenés cuenta? <b style="color:#7000FF">Regístrate aquí</b></div>
-            <div class="lnk" style="margin-top:8px;color:#7000FF;font-weight:700">Registrar mi Ministerio (Líderes)</div>
+      <p class="loginhint">👇 Este es el <b>ingreso real</b>: podés <b>iniciar sesión</b> o <b>registrarte</b> en Nehemías directamente desde acá.</p>
+
+      <div class="phone phone-login">
+        <div class="notch"></div>
+        <div class="scr"><div class="scrbody center">
+          <div class="plogo" style="background:#fff;overflow:hidden"><img src="logo_nehemias.png" alt="Nehemías" style="width:100%;height:100%;object-fit:contain" /></div>
+
+          <!-- VISTA: LOGIN -->
+          <div class="lview" data-view="login">
+            <div class="ltitle">Iniciá sesión</div>
+            <input class="finput" id="lg_email" type="email" placeholder="Correo electrónico" autocomplete="email" />
+            <input class="finput" id="lg_pass" type="password" placeholder="Contraseña" autocomplete="current-password" />
+            <label class="lcheck"><input type="checkbox" id="lg_rem" /> Recordarme</label>
+            <button class="btnm" data-act="login">INICIA SESIÓN</button>
+            <div class="lmsg" id="lg_msg"></div>
+            <div class="lnk" style="margin-top:12px;color:#B4B0C8">¿No tenés cuenta? <b class="llink" data-go="reg">Regístrate aquí</b></div>
+            <div class="lnk" style="margin-top:8px"><b class="llink" data-go="lider">Registrar mi Ministerio (Líderes)</b></div>
           </div>
+
+          <!-- VISTA: REGISTRO SERVIDOR -->
+          <div class="lview" data-view="reg" hidden>
+            <div class="ltitle">Crear cuenta</div>
+            <div class="lsub">Tu líder debe haberte invitado antes.</div>
+            <input class="finput" id="rg_nombre" placeholder="Nombre y apellido" />
+            <input class="finput" id="rg_email" type="email" placeholder="Correo electrónico" />
+            <input class="finput" id="rg_pass" type="password" placeholder="Contraseña" />
+            <button class="btnm" data-act="reg">REGISTRARME</button>
+            <div class="lmsg" id="rg_msg"></div>
+            <div class="lnk" style="margin-top:12px"><b class="llink" data-go="login">← Volver al ingreso</b></div>
+          </div>
+
+          <!-- VISTA: REGISTRO LÍDER -->
+          <div class="lview" data-view="lider" hidden>
+            <div class="ltitle">Nuevo ministerio</div>
+            <div class="lsub">Creá tu equipo y quedás como líder.</div>
+            <input class="finput" id="ld_nombre" placeholder="Tu nombre y apellido" />
+            <input class="finput" id="ld_min" placeholder="Nombre de la iglesia / ministerio" />
+            <input class="finput" id="ld_email" type="email" placeholder="Correo electrónico" />
+            <input class="finput" id="ld_pass" type="password" placeholder="Contraseña" />
+            <button class="btnm" data-act="lider">CREAR MINISTERIO</button>
+            <div class="lmsg" id="ld_msg"></div>
+            <div class="lnk" style="margin-top:12px"><b class="llink" data-go="login">← Volver al ingreso</b></div>
+          </div>
+
         </div></div>
-        <div class="ftxt">
-          <span class="n">Pantalla: Ingreso</span>
-          <h3>Cómo entrás</h3>
-          <p>Ponés tu <b>correo y contraseña</b> y tocás <b>INICIA SESIÓN</b>. Podés activar <b>"Recordarme"</b> para no volver a escribirlos la próxima vez.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> como <b>servidor</b> entrás y ves tus pestañas <b>Servicio</b>, <b>Tareas</b> y <b>Perfil</b>; como <b>líder</b> sumás <b>Cultos</b> y <b>Equipo</b>.</div>
-        </div>
       </div>
+
+      <p class="loginnote">Se conecta con Nehemías de verdad. Si iniciás sesión o creás un ministerio, tu cuenta queda lista para usar la app.</p>
 
       <div class="card">
         <h3 style="margin:0 0 10px;font-size:16px">Formas de registrarse</h3>
@@ -459,6 +516,66 @@
       });
       var h = (location.hash || '').replace('#', '');
       if (h && document.getElementById(h)) { activar(h); }
+    })();
+
+    // Login / registro real contra el backend de Nehemías (CORS habilitado).
+    (function () {
+      var API = 'https://nehemias-cartero.onrender.com';
+      var val = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; };
+      function setView(v) {
+        document.querySelectorAll('.lview').forEach(function (el) { el.hidden = (el.dataset.view !== v); });
+      }
+      function msg(id, text, ok) {
+        var e = document.getElementById(id);
+        if (e) { e.textContent = text; e.className = 'lmsg ' + (ok ? 'ok' : 'err'); }
+      }
+      document.querySelectorAll('.llink').forEach(function (b) {
+        b.addEventListener('click', function () { setView(b.dataset.go); });
+      });
+      function post(path, body) {
+        return fetch(API + path, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }).then(function (r) { return r.json(); });
+      }
+      document.querySelectorAll('[data-act]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var act = btn.dataset.act;
+          var orig = btn.textContent;
+          var stop = function () { btn.disabled = false; btn.textContent = orig; };
+          if (act === 'login') {
+            var em = val('lg_email'), pw = val('lg_pass');
+            if (!em || !pw) { msg('lg_msg', 'Completá correo y contraseña.', false); return; }
+            btn.disabled = true; btn.textContent = 'Ingresando…';
+            post('/api/login', { email: em, password: pw }).then(function (d) {
+              if (d.status === 'success') {
+                var n = (d.user && d.user.nombre) ? d.user.nombre : '';
+                msg('lg_msg', '¡Hola' + (n ? ', ' + n : '') + '! Ingreso correcto ✅', true);
+              } else { msg('lg_msg', d.message || 'Correo o contraseña incorrectos.', false); }
+              stop();
+            }).catch(function () { msg('lg_msg', 'No se pudo conectar. Probá de nuevo.', false); stop(); });
+          } else if (act === 'reg') {
+            var n1 = val('rg_nombre'), e1 = val('rg_email'), p1 = val('rg_pass');
+            if (!n1 || !e1 || !p1) { msg('rg_msg', 'Completá todos los campos.', false); return; }
+            btn.disabled = true; btn.textContent = 'Creando…';
+            post('/api/registro', { nombre: n1, email: e1, password: p1 }).then(function (d) {
+              if (d.status === 'success') { msg('rg_msg', '¡Cuenta creada! Ya podés iniciar sesión ✅', true); }
+              else { msg('rg_msg', d.message || 'No se pudo registrar.', false); }
+              stop();
+            }).catch(function () { msg('rg_msg', 'No se pudo conectar. Probá de nuevo.', false); stop(); });
+          } else if (act === 'lider') {
+            var n2 = val('ld_nombre'), m2 = val('ld_min'), e2 = val('ld_email'), p2 = val('ld_pass');
+            if (!n2 || !m2 || !e2 || !p2) { msg('ld_msg', 'Completá todos los campos.', false); return; }
+            btn.disabled = true; btn.textContent = 'Creando…';
+            post('/api/registro_admin', { nombre: n2, email: e2, password: p2, nombre_ministerio: m2 }).then(function (d) {
+              if (d.status === 'success') { msg('ld_msg', '¡Ministerio creado! Ya podés iniciar sesión 🎉', true); }
+              else { msg('ld_msg', d.message || 'No se pudo crear.', false); }
+              stop();
+            }).catch(function () { msg('ld_msg', 'No se pudo conectar. Probá de nuevo.', false); stop(); });
+          }
+        });
+      });
     })();
   </script>
 </body>
