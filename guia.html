@@ -426,7 +426,6 @@
       <div class="phone phone-login">
         <div class="notch"></div>
         <div class="scr"><div class="scrbody center">
-          <div class="plogo" style="background:#fff;overflow:hidden"><img src="logo_nehemias.png" alt="Nehemías" style="width:100%;height:100%;object-fit:contain" /></div>
 
           <!-- VISTA: LOGIN -->
           <div class="lview" data-view="login">
@@ -436,6 +435,7 @@
             <label class="lcheck"><input type="checkbox" id="lg_rem" /> Recordarme</label>
             <button class="btnm" data-act="login">INICIA SESIÓN</button>
             <div class="lmsg" id="lg_msg"></div>
+            <div class="lnk" style="margin-top:10px"><b class="llink" id="lg_olvido">¿Olvidaste tu contraseña?</b></div>
             <div class="lnk" style="margin-top:12px;color:#B4B0C8">¿No tenés cuenta? <b class="llink" data-go="reg">Regístrate aquí</b></div>
             <div class="lnk" style="margin-top:8px"><b class="llink" data-go="lider">Registrar mi Ministerio (Líderes)</b></div>
           </div>
@@ -530,7 +530,7 @@
         if (e) { e.textContent = text; e.className = 'lmsg ' + (ok ? 'ok' : 'err'); }
       }
       document.querySelectorAll('.llink').forEach(function (b) {
-        b.addEventListener('click', function () { setView(b.dataset.go); });
+        b.addEventListener('click', function () { if (b.dataset.go) { setView(b.dataset.go); } });
       });
       function post(path, body) {
         return fetch(API + path, {
@@ -538,6 +538,20 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
         }).then(function (r) { return r.json(); });
+      }
+      // ¿Olvidaste tu contraseña? -> envía el código al correo (se completa desde la app).
+      var olv = document.getElementById('lg_olvido');
+      if (olv) {
+        olv.addEventListener('click', function () {
+          var em = val('lg_email');
+          if (!em) { msg('lg_msg', 'Escribí tu correo arriba y tocá de nuevo.', false); return; }
+          olv.style.pointerEvents = 'none';
+          post('/api/olvide_password', { email: em }).then(function (d) {
+            if (d.status === 'success') { msg('lg_msg', 'Te enviamos un código a tu correo. Restablecé tu contraseña desde la app Nehemías.', true); }
+            else { msg('lg_msg', d.message || 'No pudimos enviar el código.', false); }
+            olv.style.pointerEvents = '';
+          }).catch(function () { msg('lg_msg', 'No se pudo conectar. Probá de nuevo.', false); olv.style.pointerEvents = ''; });
+        });
       }
       document.querySelectorAll('[data-act]').forEach(function (btn) {
         btn.addEventListener('click', function () {
