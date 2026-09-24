@@ -26,9 +26,16 @@
 
   /* Cabecera */
   .hero{text-align:center;padding:44px 0 14px;}
-  .logo{width:74px;height:74px;border-radius:22px;margin:0 auto 14px;
-    background:linear-gradient(135deg,var(--morado),var(--cian));display:grid;place-items:center;font-size:38px;
+  .logo{width:100px;height:100px;border-radius:26px;margin:0 auto 14px;overflow:hidden;
+    background:#fff;display:grid;place-items:center;
     box-shadow:0 18px 48px #7000ff66;animation:pulse 3.5s ease-in-out infinite;}
+  .logo img{width:100%;height:100%;object-fit:contain;display:block;}
+  .acerca{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
+    border:1px solid var(--borde);border-radius:18px;padding:20px 20px 16px;margin:8px auto 18px;
+    max-width:560px;text-align:left;}
+  .acerca p{color:var(--texto2);font-size:14px;line-height:1.6;margin:0 0 12px;}
+  .acerca .cita{color:var(--morado2);font-style:italic;font-weight:700;text-align:center;font-size:15px;margin-top:16px;}
+  .acerca .ref{color:var(--morado2);font-weight:700;text-align:center;font-size:13px;margin:0;}
   @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
   h1{font-size:clamp(34px,10vw,54px);line-height:1.03;margin:0 0 8px;font-weight:800;letter-spacing:-1px;
     background:linear-gradient(100deg,#fff 10%,var(--morado2) 45%,var(--cian) 90%);
@@ -161,9 +168,17 @@
 
   <div class="wrap">
     <header class="hero">
-      <div class="logo">⛪</div>
+      <div class="logo"><img id="heroLogo" src="logo_nehemias.png" alt="Logo Nehemías" /></div>
       <h1>Nehemías</h1>
-      <p class="lead">Elegí una pestaña y mirá por dentro cada app: cómo se ve y cómo se usa, con ejemplos reales.</p>
+      <div class="acerca">
+        <p>Nehemías fue creado con el propósito de organizar, planificar y bendecir a los equipos de servicio de la iglesia.</p>
+        <p>Así como Nehemías planificó la reconstrucción de los muros de Jerusalén con orden y dedicación, esta herramienta busca que cada servidor pueda dar lo mejor de sí para Dios, sin estrés y con claridad.</p>
+        <p>Él se dio cuenta de que no podía reconstruir un muro gigante solo. Si leés el capítulo 3 de la Biblia, es literalmente una planilla de asignaciones: dividió el trabajo entre familias y grupos específicos para reconstruir el muro.</p>
+        <p>Nosotros hoy tenemos, mediante esta asignación, la decisión de levantarnos y edificar en la obra de Dios.</p>
+        <p class="cita">"El Dios del cielo, él nos prosperará, y nosotros sus siervos nos levantaremos y edificaremos."</p>
+        <p class="ref">— Nehemías 2:20</p>
+      </div>
+      <p class="lead">Elegí una pestaña y mirá por dentro cada app, con ejemplos.</p>
     </header>
 
     <!-- PESTAÑAS -->
@@ -474,9 +489,18 @@
     (function () {
       var tabs = document.querySelectorAll('.tab');
       var panels = document.querySelectorAll('.panel');
+      var heroLogo = document.getElementById('heroLogo');
+      // Logo del hero segun la pestaña. Planificador usa el logo del "Acerca de".
+      // El de Comunidad se cambia aca cuando el usuario pase su imagen (ej: 'logo_comunidad.png').
+      var logos = {
+        planificador: 'logo_nehemias.png',
+        comunidad: 'logo_nehemias.png',
+        ingreso: 'logo_nehemias.png'
+      };
       function activar(id) {
         tabs.forEach(function (t) { t.classList.toggle('act', t.dataset.p === id); });
         panels.forEach(function (p) { p.classList.toggle('act', p.id === id); });
+        if (heroLogo && logos[id]) { heroLogo.src = logos[id]; }
       }
       tabs.forEach(function (t) {
         t.addEventListener('click', function () {
