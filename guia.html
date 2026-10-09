@@ -5,263 +5,365 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Nehemías · Planificador de ministerios</title>
 <meta name="description" content="Nehemías Planificador: organizá los cultos, las tareas y los equipos de servicio de tu iglesia." />
+<meta name="theme-color" content="#0D0A15" />
 
 <!-- Vista previa al compartir el link (WhatsApp, Facebook, etc.) -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Nehemías" />
 <meta property="og:title" content="Nehemías · Planificador de ministerios" />
 <meta property="og:description" content="La app para organizar los cultos, las tareas y los equipos de servicio de tu iglesia. (Comunidad, muy pronto)" />
-<meta property="og:url" content="https://pisciotta545.github.io/nehemias-maqueta/guia.html" />
-<meta property="og:image" content="https://pisciotta545.github.io/nehemias-maqueta/og_nehemias.jpg?v=2" />
+<link rel="canonical" href="https://nehemias.site/" />
+<meta property="og:url" content="https://nehemias.site/" />
+<meta property="og:image" content="https://nehemias.site/og_nehemias.jpg?v=3" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Nehemías · Planificador de ministerios" />
 <meta name="twitter:description" content="La app para organizar los cultos, las tareas y los equipos de servicio de tu iglesia." />
-<meta name="twitter:image" content="https://pisciotta545.github.io/nehemias-maqueta/og_nehemias.jpg?v=2" />
+<meta name="twitter:image" content="https://nehemias.site/og_nehemias.jpg?v=3" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400..700&display=swap" rel="stylesheet" />
 <style>
+  /* ===== Tokens (paleta de marca: AGENTS.md §4) ===== */
   :root{
-    --fondo:#0D0A15; --morado:#7000FF; --morado2:#9d4dff; --cian:#4DD0E1;
-    --rosa:#E91E63; --naranja:#FB8C00; --texto:#FFFFFF; --texto2:#B4B0C8; --borde:rgba(255,255,255,.08);
+    color-scheme:dark;
+    --fondo:#0D0A15; --superficie:#1A1525; --superficie2:#221B31; --marco:#241D36;
+    --morado:#7000FF; --morado-osc:#5B00D1; --morado-claro:#B48CFF; --cian:#4DD0E1; --naranja:#FB8C00;
+    --texto:#FFFFFF; --texto2:#B4B0C8; --texto3:#9A95B0; --error:#FF8A9B;
+    --borde:rgba(255,255,255,.08); --borde2:rgba(255,255,255,.14);
+    --grad:linear-gradient(135deg,var(--morado),var(--morado-osc));
+    --f-titulo:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+    --f-texto:"Figtree",ui-sans-serif,system-ui,sans-serif;
+    --ease:cubic-bezier(.16,1,.3,1);
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{margin:0;background:var(--fondo);color:var(--texto);
-    font-family:"Segoe UI",Roboto,system-ui,sans-serif;line-height:1.55;overflow-x:hidden;}
+  html{scroll-behavior:smooth;scrollbar-color:#3A2F55 var(--fondo);}
+  body{margin:0;background:var(--fondo);color:var(--texto);font-family:var(--f-texto);
+    font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;caret-color:var(--cian);}
+  /* Fondo: luz estática (sin blur ni animación, liviano en celulares) */
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(640px 520px at -8% -6%,rgba(112,0,255,.34),transparent 70%),
+      radial-gradient(560px 520px at 108% 104%,rgba(77,208,225,.16),transparent 70%);}
+  ::selection{background:rgba(112,0,255,.6);color:#fff;}
+  :focus-visible{outline:2px solid var(--cian);outline-offset:3px;border-radius:6px;}
+  a{color:var(--cian);text-underline-offset:3px;}
+  b,strong{color:var(--texto);font-weight:700;}
+  p{color:var(--texto2);margin:10px 0;}
+  h1,h2,h3{font-family:var(--f-titulo);color:var(--texto);text-wrap:balance;}
+  .ico{width:1em;height:1em;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 
-  .bg{position:fixed;inset:0;z-index:-1;overflow:hidden;}
-  .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:float 18s ease-in-out infinite;}
-  .orb.a{width:420px;height:420px;background:#7000ff;top:-120px;left:-90px;}
-  .orb.b{width:380px;height:380px;background:#4DD0E1;bottom:-140px;right:-90px;animation-delay:-6s;opacity:.35;}
-  .orb.c{width:300px;height:300px;background:#E91E63;top:40%;right:-120px;animation-delay:-11s;opacity:.28;}
-  @keyframes float{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-40px) scale(1.12);}}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
 
-  .wrap{max-width:720px;margin:0 auto;padding:0 16px;}
-
-  /* Cabecera */
-  .hero{text-align:center;padding:44px 0 14px;}
-  .logo{width:100px;height:100px;border-radius:26px;margin:0 auto 14px;overflow:hidden;
-    background:#fff;display:grid;place-items:center;
-    box-shadow:0 18px 48px #7000ff66;animation:pulse 3.5s ease-in-out infinite;}
+  /* ===== Cabecera ===== */
+  .hero{text-align:center;padding:52px 0 8px;}
+  .logo{width:96px;height:96px;border-radius:26px;margin:0 auto 18px;overflow:hidden;background:#fff;
+    box-shadow:0 18px 40px rgba(0,0,0,.45);}
   .logo img{width:100%;height:100%;object-fit:contain;display:block;}
-  .acerca{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
-    border:1px solid var(--borde);border-radius:18px;padding:0 20px;margin:8px auto 18px;
-    max-width:560px;text-align:left;}
-  .acerca summary{cursor:pointer;list-style:none;padding:15px 2px;font-weight:700;color:#fff;
-    display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px;}
+  h1{font-size:clamp(46px,11vw,80px);line-height:.95;margin:0 0 14px;font-weight:800;letter-spacing:-.035em;}
+  .lead{color:var(--texto2);font-size:16px;max-width:460px;margin:0 auto;}
+  .acerca{border:1px solid var(--borde);background:rgba(26,21,37,.6);border-radius:16px;
+    padding:0 20px;margin:22px auto 18px;max-width:600px;text-align:left;}
+  .acerca summary{cursor:pointer;list-style:none;padding:14px 0;font-weight:700;
+    display:flex;align-items:center;gap:10px;font-size:15px;}
   .acerca summary::-webkit-details-marker{display:none;}
-  .acerca summary::after{content:"+";color:var(--cian);font-size:22px;font-weight:400;line-height:1;}
+  .acerca summary .ico{font-size:19px;color:var(--morado-claro);}
+  .acerca summary::after{content:"+";margin-left:auto;color:var(--cian);font-size:22px;font-weight:400;line-height:1;}
   .acerca[open] summary::after{content:"−";}
-  .acerca-body{padding-bottom:16px;}
-  .acerca p{color:var(--texto2);font-size:14px;line-height:1.6;margin:0 0 12px;}
-  .acerca .cita{color:var(--morado2);font-style:italic;font-weight:700;text-align:center;font-size:15px;margin-top:16px;}
-  .acerca .ref{color:var(--morado2);font-weight:700;text-align:center;font-size:13px;margin:0;}
-  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
-  h1{font-size:clamp(34px,10vw,54px);line-height:1.03;margin:0 0 8px;font-weight:800;letter-spacing:-1px;
-    background:linear-gradient(100deg,#fff 10%,var(--morado2) 45%,var(--cian) 90%);
-    background-size:220% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-    animation:shine 6s linear infinite;}
-  @keyframes shine{to{background-position:220% center;}}
-  .lead{color:var(--texto2);font-size:15px;max-width:480px;margin:0 auto;}
+  .acerca-body{padding-bottom:18px;}
+  .acerca p{font-size:15px;line-height:1.65;margin:0 0 12px;max-width:62ch;}
+  .acerca .cita{color:var(--morado-claro);font-family:var(--f-titulo);font-weight:600;text-align:center;
+    font-size:18px;line-height:1.4;margin:20px auto 4px;max-width:34ch;}
+  .acerca .ref{color:var(--texto3);text-align:center;font-size:13.5px;margin:0;}
 
   /* ===== Pestañas ===== */
-  .tabs{position:sticky;top:0;z-index:5;display:flex;gap:6px;
-    background:rgba(13,10,21,.86);backdrop-filter:blur(12px);
-    padding:10px 0;margin:18px 0 22px;border-bottom:1px solid var(--borde);}
-  .tab{flex:1;text-align:center;padding:11px 4px;border-radius:13px;font-weight:700;font-size:13px;
-    color:var(--texto2);cursor:pointer;border:1px solid transparent;transition:.15s;user-select:none;}
-  .tab .e{display:block;font-size:19px;margin-bottom:2px;}
+  .tabs-bar{position:sticky;top:0;z-index:5;background:rgba(13,10,21,.94);
+    border-bottom:1px solid var(--borde);margin:26px -20px 0;padding:10px 20px;}
+  .tabs{position:relative;display:grid;grid-template-columns:repeat(3,1fr);max-width:560px;margin:0 auto;
+    padding:4px;background:var(--superficie);border:1px solid var(--borde);border-radius:16px;}
+  .tabs .ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px) / 3);border-radius:12px;
+    background:var(--grad);transform:translateX(calc(var(--i,0) * 100%));transition:transform .42s var(--ease);}
+  .tab{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;
+    padding:8px 6px;border:0;border-radius:12px;background:none;color:var(--texto2);font:700 14.5px var(--f-texto);
+    cursor:pointer;transition:color .2s;}
+  .tab .ico{font-size:18px;}
   .tab:hover{color:#fff;}
-  .tab.act{color:#fff;background:linear-gradient(135deg,rgba(112,0,255,.28),rgba(77,208,225,.18));border-color:#7000ff66;}
+  .tab[aria-selected="true"]{color:#fff;}
 
   /* ===== Paneles ===== */
-  .panel{display:none;}
-  .panel.act{display:block;animation:fadeUp .45s ease;}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+  .panel{padding-top:40px;}
+  .panel[hidden]{display:none;}
+  .panel.entra{animation:entra .5s var(--ease);}
+  @keyframes entra{from{opacity:.35;transform:translateY(10px);}}
 
-  h2{font-size:clamp(22px,6vw,28px);margin:0 0 4px;font-weight:800;letter-spacing:-.5px;}
-  .sub{color:var(--texto2);font-size:14.5px;margin:6px 0 22px;}
-  .sub b{color:#fff;}
+  .intro{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center;max-width:680px;}
+  .intro .ic{grid-row:span 2;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+    font-size:26px;color:var(--morado-claro);background:rgba(112,0,255,.16);border:1px solid rgba(180,140,255,.28);}
+  .intro .ic.cian{color:var(--cian);background:rgba(77,208,225,.1);border-color:rgba(77,208,225,.28);}
+  .intro h2{font-size:clamp(30px,6vw,40px);line-height:1;margin:0;font-weight:800;letter-spacing:-.025em;}
+  .intro .tag{color:var(--texto3);font-size:14px;font-weight:600;}
+  .intro p{grid-column:1 / -1;font-size:16.5px;margin:14px 0 0;max-width:60ch;}
 
-  .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
-    border:1px solid var(--borde);border-radius:20px;padding:22px;margin-bottom:18px;position:relative;overflow:hidden;}
-  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--morado),var(--cian));}
-  .head{display:flex;align-items:center;gap:14px;margin-bottom:8px;}
-  .ic{width:56px;height:56px;flex:0 0 56px;border-radius:16px;display:grid;place-items:center;font-size:28px;}
-  .ic.morado{background:linear-gradient(135deg,#7000ff44,#7000ff18);border:1px solid #7000ff55;}
-  .ic.cian{background:linear-gradient(135deg,#4DD0E144,#4DD0E118);border:1px solid #4DD0E155;}
-  .ic.rosa{background:linear-gradient(135deg,#E91E6344,#E91E6318);border:1px solid #E91E6355;}
-  .tag{display:inline-block;font-size:11px;font-weight:600;color:var(--texto2);
-    border:1px solid var(--borde);border-radius:999px;padding:4px 11px;margin-top:5px;}
-  p{color:var(--texto2);font-size:14.5px;margin:10px 0;}
-  p b{color:#fff;}
+  /* Etapas del armado */
+  .fase{margin:64px 0 8px;padding-top:32px;border-top:1px solid var(--borde);}
+  .fase h2{font-size:clamp(24px,4.6vw,32px);line-height:1.1;margin:0;font-weight:700;letter-spacing:-.02em;}
+  .fase p{margin:6px 0 0;color:var(--texto3);font-size:15px;}
 
-  /* Feature = mockup + explicación */
-  .feature{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:26px 0;}
-  .feature .phone{margin:0 auto;order:2;}
-  .ftxt{flex:1 1 250px;min-width:230px;order:1;}
-  .ftxt h3{font-size:17px;margin:0 0 6px;font-weight:700;}
-  .ftxt .n{display:inline-block;font-size:11px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--morado),var(--cian));
-    border-radius:999px;padding:3px 10px;margin-bottom:8px;}
-  .ftxt p{margin:6px 0;}
-  .ej{background:rgba(77,208,225,.08);border-left:3px solid var(--cian);border-radius:9px;
-    padding:10px 12px;font-size:13px;color:var(--texto2);margin-top:10px;}
-  .ej b{color:var(--cian);}
+  /* Paso = explicación + pantalla de ejemplo */
+  .paso{display:grid;gap:26px;margin:44px 0;align-items:center;}
+  .paso .phone{justify-self:center;}
+  .ptit{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+  .num{width:40px;height:40px;flex:0 0 40px;border-radius:50%;display:grid;place-items:center;
+    background:var(--grad);font:800 18px var(--f-titulo);color:#fff;}
+  .ptit h3{font-size:clamp(20px,3.6vw,24px);line-height:1.15;margin:0;font-weight:700;letter-spacing:-.015em;}
+  .ftxt{max-width:470px;}
+  .ftxt>p{font-size:16px;}
+  .ej{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:12px 14px;border-radius:12px;
+    background:rgba(77,208,225,.07);border:1px solid rgba(77,208,225,.18);font-size:14.5px;color:var(--texto2);line-height:1.55;}
+  .ej .ico{font-size:18px;color:var(--cian);margin-top:1px;}
+  .ej b:first-of-type{color:var(--cian);}
 
-  /* ===== Teléfono ===== */
-  .phone{width:196px;border:8px solid #241d36;border-radius:32px;background:#0D0A15;overflow:hidden;
-    box-shadow:0 26px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04);position:relative;flex:0 0 auto;}
-  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:66px;height:6px;background:#241d36;border-radius:999px;z-index:2;}
-  .scr{height:376px;display:flex;flex-direction:column;}
-  .stbar{display:flex;justify-content:space-between;padding:12px 14px 3px;font-size:10px;color:#8f89a3;}
-  .appbar{padding:5px 14px 11px;font-weight:800;font-size:16px;color:#fff;}
+  @media (min-width:860px){
+    .paso{grid-template-columns:1fr 1fr;gap:56px;margin:56px 0;}
+    .paso .ftxt{justify-self:end;}
+    .serie>.paso:nth-child(even) .phone{order:-1;}
+    .serie>.paso:nth-child(even) .ftxt{justify-self:start;}
+  }
+
+  /* ===== Teléfono de ejemplo ===== */
+  .phone{width:212px;border:8px solid var(--marco);border-radius:34px;background:var(--fondo);overflow:hidden;
+    box-shadow:0 30px 60px -18px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.05);position:relative;flex:0 0 auto;}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:66px;height:6px;background:var(--marco);border-radius:999px;z-index:2;}
+  .scr{height:384px;display:flex;flex-direction:column;font-family:var(--f-texto);}
+  .stbar{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 3px;font-size:10px;color:var(--texto3);}
+  .stbar .ico{font-size:11px;margin-left:3px;}
+  .appbar{padding:6px 14px 11px;font:700 16px var(--f-titulo);color:#fff;}
   .scrbody{flex:1;padding:0 12px 10px;overflow:hidden;}
   .mk{background:rgba(255,255,255,.05);border:1px solid var(--borde);border-radius:12px;padding:10px;margin-bottom:9px;}
   .mk .t{font-size:12px;font-weight:700;color:#fff;}
-  .mk .s{font-size:10.5px;color:var(--texto2);margin-top:2px;}
+  .mk .s{font-size:11px;color:var(--texto2);margin-top:2px;}
+  .mk.nota{font-size:11px;color:var(--texto2);}
+  .mk.mas{text-align:center;color:var(--cian);font-weight:700;font-size:11px;}
   .row{display:flex;gap:6px;margin-top:8px;}
-  .chip{flex:1;text-align:center;font-size:10.5px;font-weight:700;padding:6px;border-radius:8px;}
-  .chip.ok{background:linear-gradient(135deg,#7000ff,#4DD0E1);color:#fff;}
+  .chip{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:700;padding:6px;border-radius:8px;}
+  .chip.ok{background:var(--grad);color:#fff;}
   .chip.no{background:rgba(255,255,255,.06);color:var(--texto2);}
-  .flyer{height:60px;border-radius:9px;margin-bottom:8px;background:linear-gradient(135deg,#7000ff,#E91E63);
-    display:flex;align-items:flex-end;padding:7px;font-size:10.5px;font-weight:800;color:#fff;}
-  .flyer.c2{background:linear-gradient(135deg,#4DD0E1,#7000ff);}
-  .rowli{display:flex;justify-content:space-between;font-size:11px;padding:6px 0;border-top:1px solid var(--borde);}
-  .rowli:first-child{border-top:none;}.rowli b{color:#fff;font-weight:600;}
-  .ok2{color:#4DD0E1;}.wait{color:#FB8C00;}.free{color:var(--texto2);}
-  .li{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
-  .av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#7000ff,#4DD0E1);
+  .rowli{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11px;padding:6px 0;border-top:1px solid var(--borde);color:var(--texto2);}
+  .rowli:first-child{border-top:none;}
+  .rowli b{font-weight:600;display:flex;align-items:center;gap:5px;}
+  .rowli .ico{font-size:12px;}
+  .rowli>span{display:flex;align-items:center;gap:3px;}
+  .ok2{color:var(--cian);}.wait{color:var(--naranja);}.free{color:var(--texto3);}
+  .li{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .av{width:26px;height:26px;border-radius:50%;background:var(--grad);
     display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff;flex:0 0 26px;}
   .li .ln{flex:1;}.li .nm{font-size:11px;color:#fff;font-weight:600;}
   .bar{height:5px;background:rgba(255,255,255,.08);border-radius:5px;margin-top:3px;overflow:hidden;}
-  .bar i{display:block;height:100%;background:linear-gradient(90deg,#7000ff,#4DD0E1);}
-  .pct{font-size:10px;color:var(--texto2);}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--morado),var(--cian));}
   .field{background:rgba(255,255,255,.05);border:1px solid var(--borde);border-radius:9px;
-    padding:10px 11px;font-size:11px;color:var(--texto2);margin-bottom:9px;}
-  .btnm{background:linear-gradient(135deg,#7000ff,#4DD0E1);color:#fff;text-align:center;
-    font-weight:800;font-size:12px;padding:11px;border-radius:9px;margin-top:2px;
-    border:none;cursor:pointer;width:100%;font-family:inherit;letter-spacing:.5px;transition:filter .15s;}
-  .btnm:hover{filter:brightness(1.08);}
-  .btnm:disabled{opacity:.6;cursor:default;}
-  .lnk{text-align:center;font-size:10.5px;color:#4DD0E1;margin-top:10px;}
-  .nav{display:flex;justify-content:space-around;padding:9px 4px;border-top:1px solid var(--borde);font-size:15px;}
-  .nav span{opacity:.5;}.nav .on{opacity:1;}
-  .center{text-align:center;padding-top:14px;}
-  .plogo{width:44px;height:44px;border-radius:13px;margin:0 auto 8px;background:linear-gradient(135deg,#7000ff,#4DD0E1);
-    display:grid;place-items:center;font-size:22px;}
-
-  /* Pasos */
-  .pasos{list-style:none;counter-reset:paso;padding:0;margin:6px 0;}
-  .pasos li{counter-increment:paso;position:relative;padding:0 0 15px 46px;color:var(--texto2);font-size:14.5px;}
-  .pasos li::before{content:counter(paso);position:absolute;left:0;top:-2px;width:32px;height:32px;border-radius:50%;
-    background:linear-gradient(135deg,var(--morado),var(--cian));color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;}
-  .pasos li::after{content:"";position:absolute;left:15px;top:32px;bottom:5px;width:2px;background:linear-gradient(var(--morado),transparent);opacity:.4;}
-  .pasos li:last-child{padding-bottom:0;}.pasos li:last-child::after{display:none;}
-
-  .stores{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
-  .store{display:inline-flex;align-items:center;gap:10px;text-decoration:none;padding:11px 18px;border-radius:13px;
-    background:linear-gradient(135deg,var(--morado),var(--cian));color:#fff;box-shadow:0 12px 30px #7000ff55;transition:.18s;}
-  .store:hover{transform:translateY(-2px);filter:brightness(1.08);}
-  .store .sic{font-size:22px;}.store small{font-size:10px;opacity:.85;display:block;}.store b{font-size:15px;}
-  .store.soon{background:rgba(255,255,255,.05);border:1px solid var(--borde);color:var(--texto2);box-shadow:none;cursor:default;}
-  .store.soon:hover{transform:none;filter:none;}
-
-  /* Flujo de armado (bloques y mockups de config) */
-  .blocktitle{font-weight:800;color:#fff;margin:34px 2px 14px;display:flex;align-items:center;gap:10px;font-size:15px;}
-  .blocktitle .bnum{width:28px;height:28px;flex:0 0 28px;border-radius:9px;
-    background:linear-gradient(135deg,var(--morado),var(--cian));display:grid;place-items:center;font-size:14px;}
-  .blocktitle small{display:block;font-weight:500;color:var(--texto2);font-size:12px;margin-top:1px;}
+    padding:10px 11px;font-size:11px;color:var(--texto2);margin-bottom:9px;display:flex;align-items:center;gap:6px;}
+  .field.dd{justify-content:space-between;}
+  .field .ico{font-size:12px;}
+  .mlabel{color:var(--texto2);font-size:11px;margin:8px 2px 5px;}
+  .btnm{display:block;width:100%;background:var(--grad);color:#fff;text-align:center;
+    font:800 12.5px var(--f-texto);letter-spacing:.04em;padding:12px;border-radius:10px;margin-top:2px;border:0;cursor:pointer;
+    transition:filter .15s;}
+  .btnm:hover{filter:brightness(1.12);}
+  .btnm:disabled{opacity:.6;cursor:progress;}
   .inrow{display:flex;gap:6px;margin-bottom:9px;}
   .inrow .field{flex:1;margin-bottom:0;}
-  .plus{width:36px;flex:0 0 36px;border-radius:9px;background:linear-gradient(135deg,var(--morado),var(--cian));
-    color:#fff;display:grid;place-items:center;font-size:18px;font-weight:800;}
+  .plus{width:36px;flex:0 0 36px;border-radius:9px;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:16px;}
   .arow{display:flex;gap:6px;align-items:center;margin-bottom:7px;}
-  .arow .an{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--borde);border-radius:8px;
-    padding:8px 10px;font-size:11px;color:#fff;}
-  .arow .qty{flex:0 0 42px;text-align:center;background:rgba(112,0,255,.22);border:1px solid #7000ff66;
+  .arow .an{flex:1;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.05);
+    border:1px solid var(--borde);border-radius:8px;padding:8px 10px;font-size:11px;color:#fff;}
+  .arow .an .ico,.field.dd .ico{color:var(--cian);}
+  .arow .qty{flex:0 0 42px;text-align:center;background:rgba(112,0,255,.22);border:1px solid rgba(180,140,255,.35);
     border-radius:8px;padding:8px 0;font-size:11.5px;font-weight:800;color:#fff;}
-  .ddsel{display:flex;justify-content:space-between;align-items:center;}
-  .ddsel::after{content:"▾";color:var(--cian);font-size:13px;}
-  .soonbox{text-align:center;background:linear-gradient(135deg,rgba(77,208,225,.12),rgba(112,0,255,.10));
-    border:1px solid var(--borde);border-radius:22px;padding:46px 24px;margin-bottom:18px;}
-  .soonbox .soonic{font-size:52px;margin-bottom:10px;}
-  .soonbox h2{margin:0 0 8px;}
-  .soonbox p{color:var(--texto2);max-width:420px;margin:0 auto 20px;}
-  /* Login funcional (pestaña Ingreso) */
-  .loginhint{text-align:center;color:var(--texto2);font-size:14px;margin:0 auto 6px;max-width:520px;}
-  .loginhint b{color:#fff;}
-  .loginnote{text-align:center;color:#8f89a3;font-size:12px;margin:12px auto 4px;max-width:480px;line-height:1.5;}
-  .phone-login{width:300px;max-width:100%;margin:14px auto;border:8px solid #241d36;border-radius:32px;
-    background:#0D0A15;overflow:hidden;box-shadow:0 26px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04);position:relative;}
-  .phone-login .scr{min-height:auto;padding-bottom:14px;}
-  .lview{padding-top:6px;}
-  .ltitle{font-weight:800;font-size:16px;margin:4px 0 12px;text-align:center;}
-  .lsub{font-size:11.5px;color:var(--texto2);text-align:center;margin:-6px 0 12px;}
-  .finput{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--borde);border-radius:9px;
-    padding:11px 12px;font-size:13px;color:#fff;margin-bottom:9px;font-family:inherit;}
-  .finput::placeholder{color:#8f89a3;}
-  .finput:focus{outline:none;border-color:var(--morado2);}
-  .lcheck{display:flex;align-items:center;gap:7px;font-size:11.5px;color:#B4B0C8;margin:2px 2px 11px;cursor:pointer;}
-  .lcheck input{accent-color:#7000FF;width:14px;height:14px;}
-  .llink{color:var(--cian);cursor:pointer;font-weight:700;}
-  .lmsg{font-size:12px;margin:10px 0 2px;min-height:15px;text-align:center;line-height:1.4;}
-  .lmsg.ok{color:#4DD0E1;} .lmsg.err{color:#ff7a90;}
-  /* Sección destacada: app web */
-  .importante{text-align:center;border-radius:22px;padding:30px 22px 26px;margin:22px 0;
-    background:linear-gradient(135deg,rgba(112,0,255,.22),rgba(77,208,225,.14));
-    border:1.5px solid #7000ff88;box-shadow:0 14px 44px #7000ff33;}
-  .imp-badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;color:#fff;
-    background:linear-gradient(135deg,var(--morado),var(--cian));border-radius:999px;padding:6px 16px;margin-bottom:12px;
-    box-shadow:0 8px 22px #7000ff66;animation:pulse 2.5s ease-in-out infinite;}
-  .importante h2{font-size:clamp(20px,5.5vw,26px);margin:0 0 10px;}
-  .importante p{color:var(--texto2);font-size:14.5px;margin:8px auto;max-width:490px;}
-  .importante p b{color:#fff;}
-  .imp-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 20px;}
-  .imp-item{background:rgba(255,255,255,.05);border:1px solid var(--borde);border-radius:12px;
-    padding:9px 13px;font-size:13px;font-weight:600;color:#fff;}
-  .btn-web{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:15px;
-    padding:14px 26px;border-radius:14px;color:#fff;background:linear-gradient(135deg,var(--morado),var(--cian));
-    box-shadow:0 12px 30px #7000ff66;transition:transform .15s,filter .2s;}
-  .btn-web:hover{transform:translateY(-2px);filter:brightness(1.08);}
-  /* Prueba gratis + planes */
-  .regalo{text-align:center;border-radius:22px;padding:28px 22px;margin:18px 0 14px;
-    background:linear-gradient(135deg,rgba(112,0,255,.24),rgba(77,208,225,.14));border:1.5px solid #7000ff88;
-    box-shadow:0 14px 44px #7000ff33;}
-  .regalo-badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;color:#fff;
-    background:linear-gradient(135deg,var(--morado),var(--cian));border-radius:999px;padding:6px 16px;margin-bottom:12px;
-    box-shadow:0 8px 22px #7000ff66;animation:pulse 2.5s ease-in-out infinite;}
-  .regalo h2{font-size:clamp(20px,5.5vw,26px);margin:0 0 10px;}
-  .regalo p{color:var(--texto2);font-size:14.5px;margin:0 auto;max-width:490px;}
-  .regalo p b{color:#fff;}
-  .planes-titulo{text-align:center;font-size:12px;text-transform:uppercase;letter-spacing:1.2px;
-    color:var(--cian);font-weight:700;margin:26px 0 14px;}
-  .planes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:12px;}
-  .plan-card{position:relative;background:rgba(255,255,255,.04);border:1px solid var(--borde);border-radius:16px;
-    padding:18px 14px;text-align:center;transition:transform .15s,border-color .2s;}
-  .plan-card:hover{transform:translateY(-3px);}
-  .plan-card.destacado{border:1.5px solid var(--morado2);
-    background:linear-gradient(180deg,rgba(112,0,255,.18),rgba(255,255,255,.02));box-shadow:0 12px 30px #7000ff33;}
-  .plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:800;
-    color:#fff;background:linear-gradient(135deg,var(--morado),var(--cian));border-radius:999px;padding:3px 11px;white-space:nowrap;}
-  .plan-nombre{font-size:16px;font-weight:800;color:#fff;}
-  .plan-limite{font-size:12.5px;color:var(--cian);font-weight:700;margin:6px 0 8px;}
-  .plan-precio{font-size:20px;font-weight:800;color:#fff;}
-  .plan-precio span{font-size:12px;color:var(--texto2);font-weight:600;}
-  .plan-precio.gratis{color:#4DD0E1;}
-  .planes-nota{text-align:center;color:#8f89a3;font-size:12.5px;margin:16px auto 4px;max-width:470px;line-height:1.5;}
-  .pie{text-align:center;color:#6f6a85;font-size:12px;margin:30px 0 44px;line-height:1.8;}
-  .pie a{color:var(--cian);text-decoration:none;}
+  .nav{display:flex;justify-content:space-around;padding:10px 4px;border-top:1px solid var(--borde);font-size:16px;color:var(--texto3);}
+  .nav .on{color:var(--cian);}
+
+  /* ===== Botones de tienda ===== */
+  .stores{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:48px 0 0;}
+  .store{display:inline-flex;align-items:center;gap:12px;text-decoration:none;padding:12px 20px;min-height:56px;border-radius:14px;
+    background:var(--grad);color:#fff;box-shadow:0 14px 28px -14px rgba(0,0,0,.8);transition:transform .2s var(--ease),filter .2s;}
+  .store:hover{transform:translateY(-2px);filter:brightness(1.1);}
+  .store .ico{font-size:22px;}
+  .store small{font-size:11.5px;opacity:.9;display:block;line-height:1.2;}
+  .store b{font-size:16px;line-height:1.2;}
+  .store.sec{background:var(--superficie);border:1px solid var(--borde2);color:var(--texto);box-shadow:none;}
+  .store.soon{background:transparent;border:1px dashed var(--borde2);color:var(--texto2);box-shadow:none;}
+  .store.soon b{color:var(--texto2);}
+  .store.soon:hover{transform:none;filter:none;}
+
+  /* ===== Comunidad: próximamente ===== */
+  .pronto{text-align:center;margin:40px 0 0;padding:52px 24px;border-radius:24px;border:1px solid var(--borde);
+    background:linear-gradient(160deg,rgba(77,208,225,.09),rgba(112,0,255,.08));}
+  .pronto>.ico{font-size:48px;color:var(--cian);stroke-width:1.5;margin-bottom:12px;}
+  .pronto h2{font-size:clamp(26px,5vw,34px);margin:0 0 8px;font-weight:800;letter-spacing:-.02em;}
+  .pronto p{max-width:420px;margin:0 auto 22px;}
+
+  /* ===== Ingreso ===== */
+  .ingreso-grid{display:grid;gap:28px;margin-top:36px;align-items:start;}
+  .loginhint{color:var(--texto2);font-size:16px;margin:0 0 4px;}
+  .loginnote{text-align:center;color:var(--texto3);font-size:13.5px;margin:12px auto 0;max-width:300px;line-height:1.5;}
+  .phone-login{width:320px;max-width:100%;margin:0 auto;}
+  .phone-login .scr{height:auto;}
+  .phone-login .scrbody{padding:0 18px 18px;}
+  .ltitle{font:700 19px var(--f-titulo);margin:10px 0 14px;text-align:center;}
+  .lsub{font-size:13px;color:var(--texto2);text-align:center;margin:-8px 0 14px;}
+  .flabel{display:block;font-size:12.5px;font-weight:600;color:var(--texto2);margin:0 2px 5px;}
+  .finput{display:block;width:100%;background:rgba(255,255,255,.06);border:1px solid var(--borde2);border-radius:10px;
+    padding:11px 12px;font:15px var(--f-texto);color:#fff;margin-bottom:12px;transition:border-color .15s;}
+  .finput::placeholder{color:var(--texto3);}
+  .finput:focus{outline:none;border-color:var(--morado-claro);box-shadow:0 0 0 3px rgba(112,0,255,.3);}
+  .lcheck{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--texto2);margin:0 2px 14px;cursor:pointer;min-height:24px;}
+  .lcheck input{accent-color:var(--morado);width:16px;height:16px;margin:0;}
+  .humano{display:flex;align-items:center;gap:10px;padding:10px 12px;margin:4px 0 6px;border-radius:12px;
+    background:var(--superficie);border:1px solid rgba(251,140,0,.5);}
+  .humano .ico{font-size:20px;color:var(--naranja);}
+  .humano label{flex:1;font-weight:700;font-size:15px;color:#fff;}
+  .humano .finput{width:58px;flex:0 0 58px;margin:0;text-align:center;font-weight:700;padding:9px 6px;}
+  .humano .finput:focus{border-color:var(--naranja);box-shadow:0 0 0 3px rgba(251,140,0,.25);}
+  .humano-ayuda{text-align:center;font-size:12.5px;color:var(--texto3);margin:0 0 14px;}
+  .lmsg{font-size:13px;margin:10px 0 2px;min-height:18px;text-align:center;line-height:1.4;}
+  .lmsg.ok{color:var(--cian);} .lmsg.err{color:var(--error);}
+  .lir{display:block;margin:8px auto 0;font-weight:700;color:var(--cian);}
+  .llinks{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:8px;}
+  .llinks p{margin:0;font-size:13px;color:var(--texto2);}
+  .llink{background:none;border:0;padding:8px 6px;min-height:40px;color:var(--cian);font:700 13.5px var(--f-texto);cursor:pointer;
+    border-radius:8px;text-decoration:underline;text-decoration-color:rgba(77,208,225,.4);text-underline-offset:3px;}
+  .llink:hover{text-decoration-color:var(--cian);}
+  .llink .ico{vertical-align:-2px;margin-right:4px;}
+
+  .formas h3{font-size:20px;margin:26px 0 14px;font-weight:700;}
+  .pasos{list-style:none;counter-reset:paso;padding:0;margin:0;}
+  .pasos li{counter-increment:paso;position:relative;padding:0 0 18px 48px;color:var(--texto2);font-size:15.5px;}
+  .pasos li::before{content:counter(paso);position:absolute;left:0;top:-2px;width:32px;height:32px;border-radius:50%;
+    background:var(--grad);color:#fff;display:grid;place-items:center;font:800 15px var(--f-titulo);}
+  .pasos li::after{content:"";position:absolute;left:15px;top:34px;bottom:4px;width:2px;background:var(--borde2);}
+  .pasos li:last-child{padding-bottom:0;}.pasos li:last-child::after{display:none;}
+
+  @media (min-width:860px){
+    .ingreso-grid{grid-template-columns:340px 1fr;gap:56px;}
+    .ingreso-grid .login-col{order:-1;}
+    .formas h3{margin-top:32px;}
+  }
+
+  /* App web */
+  .webapp{display:grid;gap:22px;margin:64px 0 0;padding:30px 24px;border-radius:24px;
+    background:linear-gradient(140deg,rgba(112,0,255,.2),rgba(112,0,255,.05) 60%,rgba(77,208,225,.06));
+    border:1px solid rgba(180,140,255,.26);}
+  .webapp h2{font-size:clamp(24px,4.6vw,32px);line-height:1.1;margin:0 0 10px;font-weight:800;letter-spacing:-.02em;}
+  .webapp p{font-size:16px;margin:8px 0;max-width:52ch;}
+  .dispositivos{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .dispositivos li{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:rgba(13,10,21,.45);
+    font-size:14px;font-weight:600;color:var(--texto);line-height:1.3;}
+  .dispositivos .ico{font-size:20px;color:var(--cian);}
+  .btn-web{display:inline-flex;align-items:center;gap:10px;margin-top:14px;text-decoration:none;font-weight:800;font-size:16px;
+    padding:14px 24px;min-height:52px;border-radius:14px;color:#fff;background:var(--grad);
+    box-shadow:0 14px 28px -14px rgba(0,0,0,.8);transition:transform .2s var(--ease),filter .2s;}
+  .btn-web:hover{transform:translateY(-2px);filter:brightness(1.1);}
+  .btn-web .ico{font-size:19px;}
+  @media (min-width:860px){
+    .webapp{grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:40px;}
+  }
+
+  /* Prueba gratis */
+  .regalo{display:grid;gap:18px;align-items:center;margin:56px 0 0;padding:28px 24px;border-radius:24px;
+    background:var(--superficie);border:1px solid var(--borde);}
+  .sello{display:flex;align-items:center;gap:14px;}
+  .sello .ico{font-size:40px;color:var(--cian);stroke-width:1.6;}
+  .sello strong{display:block;font:800 clamp(40px,9vw,60px)/.9 var(--f-titulo);letter-spacing:-.03em;color:var(--morado-claro);}
+  .sello span{display:block;font:700 15px var(--f-texto);text-transform:uppercase;letter-spacing:.14em;color:var(--texto);margin-top:4px;}
+  .regalo h2{font-size:clamp(22px,4.4vw,28px);line-height:1.15;margin:0 0 8px;font-weight:800;letter-spacing:-.02em;}
+  .regalo p{margin:0;font-size:16px;max-width:56ch;}
+  @media (min-width:760px){ .regalo{grid-template-columns:auto 1fr;gap:40px;padding:34px 40px;} .sello{padding-right:40px;border-right:1px solid var(--borde);} }
+
+  /* Planes */
+  .planes-titulo{font-size:22px;margin:56px 0 16px;font-weight:700;}
+  .planes{list-style:none;padding:0;margin:0;display:grid;gap:8px;}
+  .plan{display:grid;grid-template-columns:1fr auto;grid-template-areas:"nombre precio" "limite precio";align-items:center;
+    gap:0 12px;padding:14px 16px;border-radius:14px;background:rgba(26,21,37,.7);border:1px solid var(--borde);}
+  .plan-nombre{grid-area:nombre;font:700 17px var(--f-titulo);color:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .plan-limite{grid-area:limite;font-size:14px;color:var(--cian);font-weight:600;}
+  .plan-precio{grid-area:precio;font:800 22px var(--f-titulo);color:#fff;text-align:right;white-space:nowrap;}
+  .plan-precio span{font:600 13px var(--f-texto);color:var(--texto2);}
+  .plan-precio.gratis{color:var(--cian);}
+  .plan.destacado{border-color:rgba(180,140,255,.55);background:linear-gradient(135deg,rgba(112,0,255,.24),rgba(26,21,37,.85));}
+  .plan-tag{font:700 11.5px var(--f-texto);color:#fff;background:var(--grad);border-radius:999px;padding:3px 10px;
+    display:inline-flex;align-items:center;gap:5px;letter-spacing:.01em;}
+  .plan-tag .ico{font-size:12px;}
+  @media (min-width:760px){
+    .planes{grid-template-columns:repeat(5,1fr);gap:12px;}
+    .plan{grid-template-columns:1fr;grid-template-areas:"nombre" "limite" "precio";text-align:center;padding:24px 14px 20px;gap:4px;}
+    .plan-nombre{justify-content:center;flex-direction:column;gap:6px;}
+    .plan-precio{text-align:center;margin-top:8px;}
+    .plan.destacado .plan-tag{order:-1;}
+  }
+  .planes-nota{color:var(--texto3);font-size:14px;margin:16px 0 0;max-width:62ch;line-height:1.55;}
+
+  .pie{text-align:center;color:var(--texto3);font-size:13.5px;margin:72px 0 48px;line-height:1.8;}
+  .pie a{color:var(--cian);}
+
+  @media (max-width:480px){
+    .wrap{padding:0 16px;}
+    .tabs-bar{margin:22px -16px 0;padding:10px 16px;}
+    .tab{flex-direction:column;gap:2px;font-size:13px;}
+    .webapp,.regalo{padding:24px 18px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .panel.entra{animation:none;}
+    .tabs .ind{transition:none;}
+    .store,.btn-web{transition:none;}
+    .store:hover,.btn-web:hover{transform:none;}
+  }
 </style>
 </head>
 <body>
-  <div class="bg"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
+  <!-- Íconos (dibujados, mismo trazo en toda la página) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-plan" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/></symbol>
+    <symbol id="i-iglesia" viewBox="0 0 24 24"><path d="M10 9h4M12 7v5"/><path d="M14 22v-4a2 2 0 0 0-4 0v4"/><path d="M18 22V5.6a1 1 0 0 0-.55-.9L12.9 2.45a2 2 0 0 0-1.8 0L6.55 4.7a1 1 0 0 0-.55.9V22"/><path d="m18 7 3.45 1.72a1 1 0 0 1 .55.9V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9.38a1 1 0 0 1 .55-.9L6 7"/></symbol>
+    <symbol id="i-llave" viewBox="0 0 24 24"><path d="M2.59 17.41A2 2 0 0 0 2 18.83V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.17a2 2 0 0 0 1.42-.59l.81-.81a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r="1"/></symbol>
+    <symbol id="i-libro" viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></symbol>
+    <symbol id="i-idea" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M6.5 3.9v16.2a1 1 0 0 0 1.52.85l13.2-8.1a1 1 0 0 0 0-1.7L8.02 3.05A1 1 0 0 0 6.5 3.9z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-celu" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+    <symbol id="i-tablet" viewBox="0 0 24 24"><rect x="3" y="2" width="18" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+    <symbol id="i-pc" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 20h20M9 15l-1 5M15 15l1 5"/></symbol>
+    <symbol id="i-mundo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-regalo" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+    <symbol id="i-muro" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M12 3v6M8 9v6M16 9v6M12 15v6"/></symbol>
+    <symbol id="i-basura" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-equipo" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-perfil" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+    <symbol id="i-capas" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65M22 12.65l-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+    <symbol id="i-servicio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-reloj" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-mas" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-abajo" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-volver" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></symbol>
+    <symbol id="i-abrir" viewBox="0 0 24 24"><path d="M7 7h10v10M7 17 17 7"/></symbol>
+    <symbol id="i-senal" viewBox="0 0 24 24"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8"/></symbol>
+    <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-bateria"viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/></symbol>
+  </svg>
 
   <div class="wrap">
     <header class="hero">
-      <div class="logo"><img id="heroLogo" src="logo_nehemias.png" alt="Logo Nehemías" /></div>
+      <div class="logo"><img id="heroLogo" src="logo_nehemias_240.webp" width="96" height="96" alt="" /></div>
       <h1>Nehemías</h1>
+      <p class="lead">Elegí una pestaña y mirá por dentro cada app, con ejemplos.</p>
       <details class="acerca">
-        <summary>📖 Acerca de Nehemías</summary>
+        <summary><svg class="ico"><use href="#i-libro"/></svg>Acerca de Nehemías</summary>
         <div class="acerca-body">
           <p>Nehemías fue creado con el propósito de organizar, planificar y bendecir a los equipos de servicio de la iglesia.</p>
           <p>Así como Nehemías planificó la reconstrucción de los muros de Jerusalén con orden y dedicación, esta herramienta busca que cada servidor pueda dar lo mejor de sí para Dios, sin estrés y con claridad.</p>
@@ -271,375 +373,421 @@
           <p class="ref">— Nehemías 2:20</p>
         </div>
       </details>
-      <p class="lead">Elegí una pestaña y mirá por dentro cada app, con ejemplos.</p>
     </header>
 
     <!-- PESTAÑAS -->
-    <nav class="tabs">
-      <div class="tab act" data-p="planificador"><span class="e">📋</span>Planificador</div>
-      <div class="tab" data-p="comunidad"><span class="e">⛪</span>Comunidad</div>
-      <div class="tab" data-p="ingreso"><span class="e">🔑</span>Ingreso</div>
+    <div id="tabsAncla"></div>
+    <nav class="tabs-bar" aria-label="Secciones">
+      <div class="tabs" role="tablist">
+        <span class="ind" aria-hidden="true"></span>
+        <button class="tab" role="tab" id="tab-planificador" aria-controls="planificador" aria-selected="true" data-p="planificador"><svg class="ico" aria-hidden="true"><use href="#i-plan"/></svg>Planificador</button>
+        <button class="tab" role="tab" id="tab-comunidad" aria-controls="comunidad" aria-selected="false" tabindex="-1" data-p="comunidad"><svg class="ico" aria-hidden="true"><use href="#i-iglesia"/></svg>Comunidad</button>
+        <button class="tab" role="tab" id="tab-ingreso" aria-controls="ingreso" aria-selected="false" tabindex="-1" data-p="ingreso"><svg class="ico" aria-hidden="true"><use href="#i-llave"/></svg>Ingreso</button>
+      </div>
     </nav>
 
+    <main>
     <!-- ================= PANEL PLANIFICADOR ================= -->
-    <section class="panel act" id="planificador">
-      <div class="card">
-        <div class="head"><div class="ic morado">📋</div><div><h2>Planificador</h2>
-          <span class="tag">Para servidores y líderes de un ministerio</span></div></div>
+    <section class="panel" id="planificador" role="tabpanel" aria-labelledby="tab-planificador">
+      <div class="intro">
+        <div class="ic" aria-hidden="true"><svg class="ico"><use href="#i-plan"/></svg></div>
+        <h2>Planificador</h2>
+        <span class="tag">Para servidores y líderes de un ministerio</span>
         <p>La app para <b>organizar tu equipo de servicio</b> (como Multimedia): armar los cultos, repartir las tareas y ver quién cumple. El líder organiza; cada servidor confirma lo suyo.</p>
       </div>
 
-      <div class="blocktitle"><span class="bnum">①</span><div>Primero: armá tu estructura<small>Se configura una vez, al empezar</small></div></div>
+      <div class="fase"><h2>Primero: armá tu estructura</h2><p>Se configura una vez, al empezar.</p></div>
 
-      <!-- Crear áreas -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Mis Áreas</div>
-          <div class="scrbody">
-            <div class="inrow"><div class="field">Nueva área (Ej: Servidores)</div><div class="plus">+</div></div>
-            <div class="mk">
-              <div class="rowli"><b>🎥 Cámara</b><span class="free">🗑️</span></div>
-              <div class="rowli"><b>🔊 Sonido</b><span class="free">🗑️</span></div>
-              <div class="rowli"><b>💡 Luces</b><span class="free">🗑️</span></div>
-              <div class="rowli"><b>🖥️ Proyección</b><span class="free">🗑️</span></div>
+      <div class="serie">
+        <!-- Crear áreas -->
+        <div class="paso">
+          <div class="ftxt">
+            <div class="ptit"><span class="num" aria-hidden="true">1</span><h3><span class="sr">Paso 1: </span>Creá las áreas de tu equipo</h3></div>
+            <p>Son los <b>puestos</b> donde sirve tu gente. Escribís el nombre y tocás <b>+</b>. Quedan guardadas para reusarlas en todos tus cultos.</p>
+            <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> en Multimedia creás <b>Cámara</b>, <b>Sonido</b>, <b>Luces</b> y <b>Proyección</b>.</span></div>
+          </div>
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Mis Áreas» con las áreas Cámara, Sonido, Luces y Proyección"><div class="notch"></div><div class="scr">
+            <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+            <div class="appbar">Mis Áreas</div>
+            <div class="scrbody">
+              <div class="inrow"><div class="field">Nueva área (Ej: Servidores)</div><div class="plus"><svg class="ico"><use href="#i-mas"/></svg></div></div>
+              <div class="mk">
+                <div class="rowli"><b>Cámara</b><span class="free"><svg class="ico"><use href="#i-basura"/></svg></span></div>
+                <div class="rowli"><b>Sonido</b><span class="free"><svg class="ico"><use href="#i-basura"/></svg></span></div>
+                <div class="rowli"><b>Luces</b><span class="free"><svg class="ico"><use href="#i-basura"/></svg></span></div>
+                <div class="rowli"><b>Proyección</b><span class="free"><svg class="ico"><use href="#i-basura"/></svg></span></div>
+              </div>
             </div>
-          </div>
-          <div class="nav"><span>🙌</span><span>📋</span><span class="on">🗂️</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">Paso 1 · Áreas</span>
-          <h3>Creá las áreas de tu equipo</h3>
-          <p>Son los <b>puestos</b> donde sirve tu gente. Escribís el nombre y tocás <b>+</b>. Quedan guardadas para reusarlas en todos tus cultos.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> en Multimedia creás <b>Cámara</b>, <b>Sonido</b>, <b>Luces</b> y <b>Proyección</b>.</div>
+            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico"><use href="#i-cal"/></svg><svg class="ico on"><use href="#i-capas"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
+          </div></div>
         </div>
-      </div>
 
-      <!-- Crear planificador -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Planificadores</div>
-          <div class="scrbody">
-            <div class="inrow"><div class="field">Nombre (Ej: Culto Joven)</div><div class="plus">+</div></div>
-            <div class="mk">
-              <div class="rowli"><b>📋 Culto Domingo</b><span class="ok2">3 áreas</span></div>
-              <div class="rowli"><b>📋 Culto Joven</b><span class="ok2">2 áreas</span></div>
-              <div class="rowli"><b>📋 Reunión de oración</b><span class="wait">sin áreas</span></div>
+        <!-- Crear planificador -->
+        <div class="paso">
+          <div class="ftxt">
+            <div class="ptit"><span class="num" aria-hidden="true">2</span><h3><span class="sr">Paso 2: </span>Creá un planificador (plantilla)</h3></div>
+            <p>Un <b>planificador</b> es una <b>plantilla reutilizable</b> para un tipo de culto. Le ponés un nombre y tocás <b>+</b>. Después le cargás las áreas (paso 3).</p>
+            <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> creás <b>“Culto Domingo”</b> y <b>“Culto Joven”</b>, porque cada uno usa áreas distintas.</span></div>
+          </div>
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Planificadores» con Culto Domingo, Culto Joven y Reunión de oración"><div class="notch"></div><div class="scr">
+            <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+            <div class="appbar">Planificadores</div>
+            <div class="scrbody">
+              <div class="inrow"><div class="field">Nombre (Ej: Culto Joven)</div><div class="plus"><svg class="ico"><use href="#i-mas"/></svg></div></div>
+              <div class="mk">
+                <div class="rowli"><b><svg class="ico"><use href="#i-plan"/></svg>Culto Domingo</b><span class="ok2">3 áreas</span></div>
+                <div class="rowli"><b><svg class="ico"><use href="#i-plan"/></svg>Culto Joven</b><span class="ok2">2 áreas</span></div>
+                <div class="rowli"><b><svg class="ico"><use href="#i-plan"/></svg>Reunión de oración</b><span class="wait">sin áreas</span></div>
+              </div>
             </div>
-          </div>
-          <div class="nav"><span>🙌</span><span class="on">📋</span><span>🗂️</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">Paso 2 · Crear planificador</span>
-          <h3>Creá un planificador (plantilla)</h3>
-          <p>Un <b>planificador</b> es una <b>plantilla reutilizable</b> para un tipo de culto. Le ponés un nombre y tocás <b>+</b>. Después le cargás las áreas (paso 3).</p>
-          <div class="ej"><b>💡 Ejemplo:</b> creás <b>“Culto Domingo”</b> y <b>“Culto Joven”</b>, porque cada uno usa áreas distintas.</div>
+            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico on"><use href="#i-cal"/></svg><svg class="ico"><use href="#i-capas"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
+          </div></div>
         </div>
-      </div>
 
-      <!-- Configurar planificador -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Culto Domingo</div>
-          <div class="scrbody">
-            <div class="mk" style="font-size:11px;color:#B4B0C8">Elegí un área y su cantidad:</div>
-            <div class="arow"><div class="an ddsel">🎥 Cámara</div><div class="qty">×2</div></div>
-            <div class="arow"><div class="an ddsel">🔊 Sonido</div><div class="qty">×1</div></div>
-            <div class="arow"><div class="an ddsel">💡 Luces</div><div class="qty">×1</div></div>
-            <div class="mk" style="text-align:center;color:#4DD0E1;font-weight:700;font-size:11px">+ Agregar área</div>
+        <!-- Configurar planificador -->
+        <div class="paso">
+          <div class="ftxt">
+            <div class="ptit"><span class="num" aria-hidden="true">3</span><h3><span class="sr">Paso 3: </span>Cargale las áreas y cuántas personas</h3></div>
+            <p>Entrás al planificador y le agregás las <b>áreas</b> (las que creaste en el paso 1) con la <b>cantidad</b> de personas que necesitás en cada una.</p>
+            <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> a <b>“Culto Domingo”</b> le ponés <b>Cámara ×2</b>, <b>Sonido ×1</b> y <b>Luces ×1</b>.</span></div>
           </div>
-          <div class="nav"><span>🙌</span><span class="on">📋</span><span>🗂️</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">Paso 3 · Configurar</span>
-          <h3>Cargale las áreas y cuántas personas</h3>
-          <p>Entrás al planificador y le agregás las <b>áreas</b> (las que creaste en el paso 1) con la <b>cantidad</b> de personas que necesitás en cada una.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> a <b>“Culto Domingo”</b> le ponés <b>Cámara ×2</b>, <b>Sonido ×1</b> y <b>Luces ×1</b>.</div>
-        </div>
-      </div>
-
-      <!-- Crear culto -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Crear Culto</div>
-          <div class="scrbody">
-            <div class="field">Nombre (Ej: Culto Domingo)</div>
-            <div class="field">📅 Fecha (DD-MM-AAAA)</div>
-            <div style="color:#B4B0C8;font-size:10.5px;margin:8px 2px 5px">Planificador de áreas:</div>
-            <div class="field ddsel">Culto Domingo</div>
-            <div class="btnm">CREAR CULTO</div>
-          </div>
-          <div class="nav"><span>🙌</span><span class="on">📋</span><span>🗂️</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">Paso 4 · Crear culto</span>
-          <h3>Creá el culto con esa plantilla</h3>
-          <p>Ponés <b>nombre</b> y <b>fecha</b>, elegís el <b>planificador</b> y listo: el culto nace con todas las áreas y sus cupos, listas para asignar servidores.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> creás <b>“Culto Domingo · 20-07”</b> con esa plantilla y aparecen solas las áreas Cámara ×2, Sonido ×1 y Luces ×1.</div>
-        </div>
-      </div>
-
-      <div class="blocktitle"><span class="bnum">②</span><div>Después: el día a día<small>En cada culto que organizás</small></div></div>
-
-      <!-- Cultos (el líder asigna) -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Cultos</div>
-          <div class="scrbody">
-            <div class="mk"><div class="t">Domingo · 10:00 hs</div>
-              <div class="rowli"><b>Cámara 1</b><span class="ok2">Juan ✓</span></div>
-              <div class="rowli"><b>Sonido</b><span class="wait">Pedro ⏳</span></div>
-              <div class="rowli"><b>Luces</b><span class="free">+ asignar</span></div>
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo del planificador «Culto Domingo» con Cámara ×2, Sonido ×1 y Luces ×1"><div class="notch"></div><div class="scr">
+            <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+            <div class="appbar">Culto Domingo</div>
+            <div class="scrbody">
+              <div class="mk nota">Elegí un área y su cantidad:</div>
+              <div class="arow"><div class="an">Cámara<svg class="ico"><use href="#i-abajo"/></svg></div><div class="qty">×2</div></div>
+              <div class="arow"><div class="an">Sonido<svg class="ico"><use href="#i-abajo"/></svg></div><div class="qty">×1</div></div>
+              <div class="arow"><div class="an">Luces<svg class="ico"><use href="#i-abajo"/></svg></div><div class="qty">×1</div></div>
+              <div class="mk mas">+ Agregar área</div>
             </div>
+            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico on"><use href="#i-cal"/></svg><svg class="ico"><use href="#i-capas"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
+          </div></div>
+        </div>
+
+        <!-- Crear culto -->
+        <div class="paso">
+          <div class="ftxt">
+            <div class="ptit"><span class="num" aria-hidden="true">4</span><h3><span class="sr">Paso 4: </span>Creá el culto con esa plantilla</h3></div>
+            <p>Ponés <b>nombre</b> y <b>fecha</b>, elegís el <b>planificador</b> y listo: el culto nace con todas las áreas y sus cupos, listas para asignar servidores.</p>
+            <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> creás <b>“Culto Domingo · 20-07”</b> con esa plantilla y aparecen solas las áreas Cámara ×2, Sonido ×1 y Luces ×1.</span></div>
           </div>
-          <div class="nav"><span>🙌</span><span class="on">📋</span><span>👥</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">1) El líder asigna</span>
-          <h3>Abrí el culto y asigná servidores</h3>
-          <p>El culto ya trae las <b>áreas</b> del planificador. El líder pone a cada servidor en su lugar y, al enviar, todos reciben la notificación.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> en el culto del domingo ponés a Juan en Cámara y a Pedro en Sonido; Luces la asignás después.</div>
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Crear Culto» con nombre, fecha y planificador Culto Domingo"><div class="notch"></div><div class="scr">
+            <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+            <div class="appbar">Crear Culto</div>
+            <div class="scrbody">
+              <div class="field">Nombre (Ej: Culto Domingo)</div>
+              <div class="field"><svg class="ico"><use href="#i-cal"/></svg>Fecha (DD-MM-AAAA)</div>
+              <div class="mlabel">Planificador de áreas:</div>
+              <div class="field dd">Culto Domingo<svg class="ico"><use href="#i-abajo"/></svg></div>
+              <div class="btnm">CREAR CULTO</div>
+            </div>
+            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico on"><use href="#i-cal"/></svg><svg class="ico"><use href="#i-capas"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
+          </div></div>
         </div>
       </div>
 
-      <!-- Servicio (el servidor confirma) -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Servicio</div>
-          <div class="scrbody">
-            <div class="mk"><div class="t">Culto Domingo · Cámara 1</div><div class="s">Te asignaron a esta área</div>
-              <div class="row"><div class="chip ok">✓ Aceptar</div><div class="chip no">✗ Rechazar</div></div></div>
-            <div class="mk"><div class="t">Reunión Jueves · Sonido</div><div class="s ok2" style="color:#4DD0E1">✓ Confirmado</div></div>
-          </div>
-          <div class="nav"><span class="on">🙌</span><span>📋</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">2) El servidor confirma</span>
-          <h3>Aceptá o rechazá tu tarea</h3>
-          <p>Cada servidor ve <b>solo lo que le toca</b> y responde con un toque. Si rechaza, deja el motivo.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> te toca <b>Cámara 1</b> el domingo. Tocás <b>Aceptar</b> y el líder lo ve al instante.</div>
-        </div>
-      </div>
+      <div class="fase"><h2>Después: el día a día</h2><p>En cada culto que organizás.</p></div>
 
-      <!-- Equipo -->
-      <div class="feature">
-        <div class="phone"><div class="notch"></div><div class="scr">
-          <div class="stbar"><span>9:41</span><span>📶 🔋</span></div>
-          <div class="appbar">Equipo</div>
-          <div class="scrbody">
-            <div class="li"><div class="av">J</div><div class="ln"><div class="nm">Juan · 90%</div><div class="bar"><i style="width:90%"></i></div></div></div>
-            <div class="li"><div class="av">M</div><div class="ln"><div class="nm">María · 75%</div><div class="bar"><i style="width:75%"></i></div></div></div>
-            <div class="li"><div class="av">P</div><div class="ln"><div class="nm">Pedro · 60%</div><div class="bar"><i style="width:60%"></i></div></div></div>
+      <div class="serie">
+        <!-- Cultos (el líder asigna) -->
+        <div class="paso">
+          <div class="ftxt">
+            <div class="ptit"><span class="num" aria-hidden="true">1</span><h3><span class="sr">1: </span>Abrí el culto y asigná servidores</h3></div>
+            <p>El culto ya trae las <b>áreas</b> del planificador. El líder pone a cada servidor en su lugar y, al enviar, todos reciben la notificación.</p>
+            <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> en el culto del domingo ponés a Juan en Cámara y a Pedro en Sonido; Luces la asignás después.</span></div>
           </div>
-          <div class="nav"><span>🙌</span><span>📋</span><span class="on">👥</span><span>👤</span></div>
-        </div></div>
-        <div class="ftxt">
-          <span class="n">3) El líder controla</span>
-          <h3>Seguí el rendimiento de tu gente</h3>
-          <p>Ves el <b>cumplimiento</b> de cada servidor (aceptadas vs. asignadas), pendientes y rechazos. Tocás a uno y ves su historial completo.</p>
-          <div class="ej"><b>💡 Ejemplo:</b> notás que <b>Pedro</b> viene bajo (60%): entrás a su detalle y ves que rechazó dos cultos por viaje.</div>
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Cultos»: Juan confirmado en Cámara 1, Pedro pendiente en Sonido y Luces sin asignar"><div class="notch"></div><div class="scr">
+            <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+            <div class="appbar">Cultos</div>
+            <div class="scrbody">
+              <div class="mk"><div class="t">Domingo · 10:00 hs</div>
+                <div class="rowli"><b>Cámara 1</b><span class="ok2">Juan <svg class="ico"><use href="#i-ok"/></svg></span></div>
+                <div class="rowli"><b>Sonido</b><span class="wait">Pedro <svg class="ico"><use href="#i-reloj"/></svg></span></div>
+                <div class="rowli"><b>Luces</b><span class="free">+ asignar</span></div>
+              </div>
+            </div>
+            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico on"><use href="#i-cal"/></svg><svg class="ico"><use href="#i-equipo"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
+          </div></div>
+        </div>
+
+        <!-- Servicio (el servidor confirma) -->
+        <div class="paso">
+          <div class="ftxt">
+            <div class="ptit"><span class="num" aria-hidden="true">2</span><h3><span class="sr">2: </span>Aceptá o rechazá tu tarea</h3></div>
+            <p>Cada servidor ve <b>solo lo que le toca</b> y responde con un toque. Si rechaza, deja el motivo.</p>
+            <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> te toca <b>Cámara 1</b> el domingo. Tocás <b>Aceptar</b> y el líder lo ve al instante.</span></div>
+          </div>
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Servicio»: asignación a Cámara 1 con botones Aceptar y Rechazar, y otra tarea ya confirmada"><div class="notch"></div><div class="scr">
+            <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+            <div class="appbar">Servicio</div>
+            <div class="scrbody">
+              <div class="mk"><div class="t">Culto Domingo · Cámara 1</div><div class="s">Te asignaron a esta área</div>
+                <div class="row"><div class="chip ok"><svg class="ico"><use href="#i-ok"/></svg>Aceptar</div><div class="chip no"><svg class="ico"><use href="#i-x"/></svg>Rechazar</div></div></div>
+              <div class="mk"><div class="t">Reunión Jueves · Sonido</div><div class="s ok2">✓ Confirmado</div></div>
+            </div>
+            <div class="nav"><svg class="ico on"><use href="#i-servicio"/></svg><svg class="ico"><use href="#i-cal"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
+          </div></div>
+        </div>
+
+        <!-- Equipo -->
+        <div class="paso">
+          <div class="ftxt">
+            <div class="ptit"><span class="num" aria-hidden="true">3</span><h3><span class="sr">3: </span>Seguí el rendimiento de tu gente</h3></div>
+            <p>Ves el <b>cumplimiento</b> de cada servidor (aceptadas vs. asignadas), pendientes y rechazos. Tocás a uno y ves su historial completo.</p>
+            <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> notás que <b>Pedro</b> viene bajo (60%): entrás a su detalle y ves que rechazó dos cultos por viaje.</span></div>
+          </div>
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Equipo» con el cumplimiento de Juan 90%, María 75% y Pedro 60%"><div class="notch"></div><div class="scr">
+            <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+            <div class="appbar">Equipo</div>
+            <div class="scrbody">
+              <div class="li"><div class="av">J</div><div class="ln"><div class="nm">Juan · 90%</div><div class="bar"><i style="width:90%"></i></div></div></div>
+              <div class="li"><div class="av">M</div><div class="ln"><div class="nm">María · 75%</div><div class="bar"><i style="width:75%"></i></div></div></div>
+              <div class="li"><div class="av">P</div><div class="ln"><div class="nm">Pedro · 60%</div><div class="bar"><i style="width:60%"></i></div></div></div>
+            </div>
+            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico"><use href="#i-cal"/></svg><svg class="ico on"><use href="#i-equipo"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
+          </div></div>
         </div>
       </div>
 
       <div class="stores">
         <a class="store" href="https://play.google.com/store/apps/details?id=com.muralla.nehemias">
-          <span class="sic">▶</span><span><small>Disponible en</small><b>Google Play</b></span></a>
-        <span class="store soon"><span class="sic">🍎</span><span><small>App Store</small><b>Próximamente</b></span></span>
+          <svg class="ico" aria-hidden="true"><use href="#i-play"/></svg><span><small>Disponible en</small><b>Google Play</b></span></a>
+        <span class="store soon"><svg class="ico" aria-hidden="true"><use href="#i-celu"/></svg><span><small>App Store</small><b>Próximamente</b></span></span>
       </div>
     </section>
 
     <!-- ================= PANEL COMUNIDAD ================= -->
     <!-- ⚠️ Contenido completo (Inicio / Grupo familiar / Gestión) respaldado en
          prototipos/comunidad_panel_backup.html. Restaurar cuando la App 2 esté lista. -->
-    <section class="panel" id="comunidad">
-      <div class="card">
-        <div class="head"><div class="ic cian">⛪</div><div><h2>Comunidad</h2>
-          <span class="tag">Para toda la congregación</span></div></div>
+    <section class="panel" id="comunidad" role="tabpanel" aria-labelledby="tab-comunidad">
+      <div class="intro">
+        <div class="ic cian" aria-hidden="true"><svg class="ico"><use href="#i-iglesia"/></svg></div>
+        <h2>Comunidad</h2>
+        <span class="tag">Para toda la congregación</span>
         <p>La app de <b>toda la iglesia</b> (eventos, avisos, miembros, bautismos, grupo familiar y más) está <b>en desarrollo</b>.</p>
       </div>
-      <div class="soonbox">
-        <div class="soonic">🚧</div>
+      <div class="pronto">
+        <svg class="ico" aria-hidden="true"><use href="#i-muro"/></svg>
         <h2>Próximamente</h2>
         <p>Estamos construyendo <b>Nehemías Comunidad</b>. Muy pronto vas a tener toda la vida de la iglesia en tu teléfono.</p>
-        <span class="store soon"><span class="sic">⛪</span><span><small>Comunidad</small><b>Próximamente</b></span></span>
+        <span class="store soon"><svg class="ico" aria-hidden="true"><use href="#i-iglesia"/></svg><span><small>Comunidad</small><b>Próximamente</b></span></span>
       </div>
     </section>
 
     <!-- ================= PANEL INGRESO ================= -->
-    <section class="panel" id="ingreso">
-      <div class="card">
-        <div class="head"><div class="ic rosa">🔑</div><div><h2>Ingreso</h2>
-          <span class="tag">Iniciá sesión en Nehemías Planificador</span></div></div>
+    <section class="panel" id="ingreso" role="tabpanel" aria-labelledby="tab-ingreso">
+      <div class="intro">
+        <div class="ic" aria-hidden="true"><svg class="ico"><use href="#i-llave"/></svg></div>
+        <h2>Ingreso</h2>
+        <span class="tag">Iniciá sesión en Nehemías Planificador</span>
         <p>Con tu <b>correo y contraseña</b> entrás a la app. Según tu rol, te muestra tus pestañas: servidor o líder.</p>
       </div>
 
-      <p class="loginhint">👇 Este es el <b>ingreso real</b>: podés <b>iniciar sesión</b> o <b>registrarte</b> en Nehemías directamente desde acá.</p>
-
-      <div class="phone phone-login">
-        <div class="notch"></div>
-        <div class="scr"><div class="scrbody center">
-
-          <!-- VISTA: LOGIN -->
-          <div class="lview" data-view="login">
-            <div class="ltitle">Iniciá sesión</div>
-            <input class="finput" id="lg_email" type="email" placeholder="Correo electrónico" autocomplete="email" />
-            <input class="finput" id="lg_pass" type="password" placeholder="Contraseña" autocomplete="current-password" />
-            <label class="lcheck"><input type="checkbox" id="lg_rem" /> Recordarme</label>
-            <button class="btnm" data-act="login">INICIA SESIÓN</button>
-            <div class="lmsg" id="lg_msg"></div>
-            <div class="lnk" style="margin-top:10px"><b class="llink" id="lg_olvido">¿Olvidaste tu contraseña?</b></div>
-            <div class="lnk" style="margin-top:12px;color:#B4B0C8">¿No tenés cuenta? <b class="llink" data-go="reg">Regístrate aquí</b></div>
-            <div class="lnk" style="margin-top:8px"><b class="llink" data-go="lider">Registrar mi Ministerio (Líderes)</b></div>
+      <div class="ingreso-grid">
+        <div class="info-col">
+          <p class="loginhint">Este es el <b>ingreso real</b>: podés <b>iniciar sesión</b> o <b>registrarte</b> en Nehemías directamente desde acá.</p>
+          <div class="formas">
+            <h3>Formas de registrarse</h3>
+            <ol class="pasos">
+              <li><b>Líder → creá tu ministerio.</b> Tocás <b>"Registrar mi Ministerio (Líderes)"</b> y quedás como administrador de tu equipo.</li>
+              <li><b>Servidor → por invitación.</b> El líder te invita con tu correo; te registrás en <b>"Regístrate aquí"</b> con ese mismo correo y entrás directo al equipo.</li>
+              <li><b>¿Olvidaste la clave?</b> Tocás <b>"¿Olvidaste tu contraseña?"</b>, pedís el código a tu correo y creás una nueva.</li>
+            </ol>
           </div>
-
-          <!-- VISTA: REGISTRO SERVIDOR -->
-          <div class="lview" data-view="reg" hidden>
-            <div class="ltitle">Crear cuenta</div>
-            <div class="lsub">Tu líder debe haberte invitado antes.</div>
-            <input class="finput" id="rg_nombre" placeholder="Nombre y apellido" />
-            <input class="finput" id="rg_email" type="email" placeholder="Correo electrónico" />
-            <input class="finput" id="rg_pass" type="password" placeholder="Contraseña" />
-            <button class="btnm" data-act="reg">REGISTRARME</button>
-            <div class="lmsg" id="rg_msg"></div>
-            <div class="lnk" style="margin-top:12px"><b class="llink" data-go="login">← Volver al ingreso</b></div>
-          </div>
-
-          <!-- VISTA: REGISTRO LÍDER -->
-          <div class="lview" data-view="lider" hidden>
-            <div class="ltitle">Nuevo ministerio</div>
-            <div class="lsub">Creá tu equipo y quedás como líder.</div>
-            <input class="finput" id="ld_nombre" placeholder="Tu nombre y apellido" />
-            <input class="finput" id="ld_min" placeholder="Nombre de la iglesia / ministerio" />
-            <input class="finput" id="ld_email" type="email" placeholder="Correo electrónico" />
-            <input class="finput" id="ld_pass" type="password" placeholder="Contraseña" />
-            <button class="btnm" data-act="lider">CREAR MINISTERIO</button>
-            <div class="lmsg" id="ld_msg"></div>
-            <div class="lnk" style="margin-top:12px"><b class="llink" data-go="login">← Volver al ingreso</b></div>
-          </div>
-
-        </div></div>
-      </div>
-
-      <p class="loginnote">Se conecta con Nehemías de verdad. Si iniciás sesión o creás un ministerio, tu cuenta queda lista para usar la app.</p>
-
-      <div class="importante">
-        <div class="imp-badge">⚡ IMPORTANTE</div>
-        <h2>En Nehemías pensamos en todo 💜</h2>
-        <p>¿Poco espacio en el teléfono? ¿Te quedaste sin celular a mano? ¿Tenés un iPhone?</p>
-        <p><b>No importa el dispositivo.</b> Nehemías también es una <b>app web</b>: es <b>exactamente la misma app</b>, sin instalar nada y sin ocupar memoria. La tenés donde quieras.</p>
-        <div class="imp-list">
-          <div class="imp-item">💻 En tu PC o notebook</div>
-          <div class="imp-item">📱 En cualquier Android</div>
-          <div class="imp-item">🍎 En iPhone o iPad</div>
-          <div class="imp-item">🌐 En cualquier navegador</div>
         </div>
-        <a class="btn-web" href="https://nehemias-cartero.onrender.com/" target="_blank" rel="noopener">🌐 Abrir la app web</a>
+
+        <div class="login-col">
+          <div class="phone phone-login">
+            <div class="notch"></div>
+            <div class="scr"><div class="stbar" aria-hidden="true"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+              <div class="scrbody">
+
+              <!-- VISTA: LOGIN -->
+              <form class="lview" data-view="login" data-act="login" novalidate>
+                <h3 class="ltitle">Iniciá sesión</h3>
+                <label class="flabel" for="lg_email">Correo electrónico</label>
+                <input class="finput" id="lg_email" type="email" placeholder="tu@correo.com" autocomplete="email" />
+                <label class="flabel" for="lg_pass">Contraseña</label>
+                <input class="finput" id="lg_pass" type="password" autocomplete="current-password" />
+                <label class="lcheck"><input type="checkbox" id="lg_rem" /> Recordarme</label>
+                <button class="btnm" type="submit">INICIA SESIÓN</button>
+                <div class="lmsg" id="lg_msg" role="status" aria-live="polite"></div>
+                <div class="llinks">
+                  <button class="llink" type="button" id="lg_olvido">¿Olvidaste tu contraseña?</button>
+                  <p>¿No tenés cuenta? <button class="llink" type="button" data-go="reg">Regístrate aquí</button></p>
+                  <button class="llink" type="button" data-go="lider">Registrar mi Ministerio (Líderes)</button>
+                </div>
+              </form>
+
+              <!-- VISTA: REGISTRO SERVIDOR -->
+              <form class="lview" data-view="reg" data-act="reg" novalidate hidden>
+                <h3 class="ltitle">Crear cuenta</h3>
+                <p class="lsub">Tu líder debe haberte invitado antes.</p>
+                <label class="flabel" for="rg_nombre">Nombre y apellido</label>
+                <input class="finput" id="rg_nombre" autocomplete="name" />
+                <label class="flabel" for="rg_email">Correo electrónico</label>
+                <input class="finput" id="rg_email" type="email" placeholder="El mismo con el que te invitaron" autocomplete="email" />
+                <label class="flabel" for="rg_pass">Contraseña</label>
+                <input class="finput" id="rg_pass" type="password" autocomplete="new-password" />
+                <button class="btnm" type="submit">REGISTRARME</button>
+                <div class="lmsg" id="rg_msg" role="status" aria-live="polite"></div>
+                <div class="llinks"><button class="llink" type="button" data-go="login"><svg class="ico" aria-hidden="true"><use href="#i-volver"/></svg>Volver al ingreso</button></div>
+              </form>
+
+              <!-- VISTA: REGISTRO LÍDER -->
+              <form class="lview" data-view="lider" data-act="lider" novalidate hidden>
+                <h3 class="ltitle">Nuevo ministerio</h3>
+                <p class="lsub">Creá tu equipo y quedás como líder.</p>
+                <label class="flabel" for="ld_nombre">Tu nombre y apellido</label>
+                <input class="finput" id="ld_nombre" autocomplete="name" />
+                <label class="flabel" for="ld_iglesia">Nombre de la Iglesia</label>
+                <input class="finput" id="ld_iglesia" placeholder="Ej: Iglesia Esperanza" autocomplete="organization" />
+                <label class="flabel" for="ld_min">Nombre del ministerio / equipo que liderás</label>
+                <input class="finput" id="ld_min" placeholder="Ej: Multimedia" />
+                <label class="flabel" for="ld_email">Correo electrónico</label>
+                <input class="finput" id="ld_email" type="email" placeholder="tu@correo.com" autocomplete="email" />
+                <label class="flabel" for="ld_pass">Contraseña</label>
+                <input class="finput" id="ld_pass" type="password" autocomplete="new-password" />
+                <label class="flabel" for="ld_pass2">Repetí la contraseña</label>
+                <input class="finput" id="ld_pass2" type="password" autocomplete="new-password" />
+                <!-- Escudo anti-bots: la misma suma que pide la app (registro_lider_page.dart) -->
+                <div class="humano">
+                  <svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg>
+                  <label for="ld_bot" id="ld_bot_preg">¿Cuánto es ? + ?</label>
+                  <input class="finput" id="ld_bot" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" aria-describedby="ld_bot_ayuda" />
+                </div>
+                <p class="humano-ayuda" id="ld_bot_ayuda">Hacé la suma para verificar que sos humano.</p>
+                <button class="btnm" type="submit">CREAR MINISTERIO</button>
+                <div class="lmsg" id="ld_msg" role="status" aria-live="polite"></div>
+                <div class="llinks"><button class="llink" type="button" data-go="login"><svg class="ico" aria-hidden="true"><use href="#i-volver"/></svg>Volver al ingreso</button></div>
+              </form>
+
+            </div></div>
+          </div>
+          <p class="loginnote">Se conecta con Nehemías de verdad. Si iniciás sesión o creás un ministerio, tu cuenta queda lista para usar la app.</p>
+        </div>
       </div>
 
-      <div class="card">
-        <h3 style="margin:0 0 10px;font-size:16px">Formas de registrarse</h3>
-        <ol class="pasos">
-          <li><b>Líder → creá tu ministerio.</b> Tocás <b>"Registrar mi Ministerio (Líderes)"</b> y quedás como administrador de tu equipo.</li>
-          <li><b>Servidor → por invitación.</b> El líder te invita con tu correo; te registrás en <b>"Regístrate aquí"</b> con ese mismo correo y entrás directo al equipo.</li>
-          <li><b>¿Olvidaste la clave?</b> Tocás <b>"¿Olvidaste tu contraseña?"</b>, pedís el código a tu correo y creás una nueva.</li>
-        </ol>
+      <div class="webapp">
+        <div>
+          <h2>En Nehemías pensamos en todo 💜</h2>
+          <p>¿Poco espacio en el teléfono? ¿Te quedaste sin celular a mano? ¿Tenés un iPhone?</p>
+          <p><b>No importa el dispositivo.</b> Nehemías también es una <b>app web</b>: es <b>exactamente la misma app</b>, sin instalar nada y sin ocupar memoria. La tenés donde quieras.</p>
+          <a class="btn-web" href="https://nehemias.site/login"><svg class="ico" aria-hidden="true"><use href="#i-mundo"/></svg>Abrir la app web<svg class="ico" aria-hidden="true"><use href="#i-abrir"/></svg></a>
+        </div>
+        <ul class="dispositivos">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-pc"/></svg>En tu PC o notebook</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-celu"/></svg>En cualquier Android</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-tablet"/></svg>En iPhone o iPad</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-mundo"/></svg>En cualquier navegador</li>
+        </ul>
       </div>
 
       <!-- Prueba gratis + planes -->
       <div class="regalo">
-        <div class="regalo-badge">🎁 1 MES GRATIS</div>
-        <h2>Registrate como líder y probá todo gratis</h2>
-        <p>Cada nuevo líder que crea su ministerio arranca con <b>1 mes de cuenta Estándar sin costo</b>: hasta <b>20 servidores</b> para armar tu equipo con tranquilidad. Sin tarjeta y sin compromiso. 💜</p>
+        <div class="sello"><svg class="ico" aria-hidden="true"><use href="#i-regalo"/></svg><div><strong>1 mes</strong><span>gratis</span></div></div>
+        <div>
+          <h2>Registrate como líder y probá todo gratis</h2>
+          <p>Cada nuevo líder que crea su ministerio arranca con <b>1 mes de cuenta Estándar sin costo</b>: hasta <b>20 servidores</b> para armar tu equipo con tranquilidad. Sin tarjeta y sin compromiso. 💜</p>
+        </div>
       </div>
 
-      <div class="planes-titulo">Nuestros planes</div>
-      <div class="planes-grid">
-        <div class="plan-card">
-          <div class="plan-nombre">Gratis</div>
-          <div class="plan-limite">6 servidores</div>
-          <div class="plan-precio gratis">$0</div>
-        </div>
-        <div class="plan-card">
-          <div class="plan-nombre">Básica</div>
-          <div class="plan-limite">12 servidores</div>
-          <div class="plan-precio">6 USD<span> /mes</span></div>
-        </div>
-        <div class="plan-card destacado">
-          <div class="plan-tag">🎁 Tu mes gratis</div>
-          <div class="plan-nombre">Estándar</div>
-          <div class="plan-limite">20 servidores</div>
-          <div class="plan-precio">10 USD<span> /mes</span></div>
-        </div>
-        <div class="plan-card">
-          <div class="plan-nombre">Premium</div>
-          <div class="plan-limite">50 servidores</div>
-          <div class="plan-precio">20 USD<span> /mes</span></div>
-        </div>
-        <div class="plan-card">
-          <div class="plan-nombre">Ultra</div>
-          <div class="plan-limite">120 servidores</div>
-          <div class="plan-precio">30 USD<span> /mes</span></div>
-        </div>
-      </div>
-      <p class="planes-nota">Cuando termine tu mes gratis, elegí el plan que mejor le quede a tu iglesia (o seguí en el Gratis). Las suscripciones se contratan desde la app de Android. 📲</p>
+      <h2 class="planes-titulo">Nuestros planes</h2>
+      <ul class="planes">
+        <li class="plan"><div class="plan-nombre">Gratis</div><div class="plan-limite">6 servidores</div><div class="plan-precio gratis">$0</div></li>
+        <li class="plan"><div class="plan-nombre">Básica</div><div class="plan-limite">12 servidores</div><div class="plan-precio">6 USD<span> /mes</span></div></li>
+        <li class="plan destacado"><div class="plan-nombre">Estándar <span class="plan-tag"><svg class="ico" aria-hidden="true"><use href="#i-regalo"/></svg>Tu mes gratis</span></div><div class="plan-limite">20 servidores</div><div class="plan-precio">10 USD<span> /mes</span></div></li>
+        <li class="plan"><div class="plan-nombre">Premium</div><div class="plan-limite">50 servidores</div><div class="plan-precio">20 USD<span> /mes</span></div></li>
+        <li class="plan"><div class="plan-nombre">Ultra</div><div class="plan-limite">120 servidores</div><div class="plan-precio">30 USD<span> /mes</span></div></li>
+      </ul>
+      <p class="planes-nota">Cuando termine tu mes gratis, elegí el plan que mejor le quede a tu iglesia (o seguí en el Gratis). Las suscripciones se contratan desde la app de Android.</p>
 
       <div class="stores">
         <a class="store" href="https://play.google.com/store/apps/details?id=com.muralla.nehemias">
-          <span class="sic">▶</span><span><small>Empezá en</small><b>Google Play</b></span></a>
-        <a class="store soon" href="mailto:g.support.it1@gmail.com" style="cursor:pointer">
-          <span class="sic">✉️</span><span><small>¿Dudas?</small><b>Soporte</b></span></a>
+          <svg class="ico" aria-hidden="true"><use href="#i-play"/></svg><span><small>Empezá en</small><b>Google Play</b></span></a>
+        <a class="store sec" href="mailto:g.support.it1@gmail.com">
+          <svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span><small>¿Dudas?</small><b>Soporte</b></span></a>
       </div>
     </section>
+    </main>
 
-    <p class="pie">Nehemías · gestión de ministerios y congregación.<br>
-      ¿Dudas? <a href="mailto:g.support.it1@gmail.com">g.support.it1@gmail.com</a></p>
+    <footer class="pie">Nehemías · gestión de ministerios y congregación.<br>
+      ¿Dudas? <a href="mailto:g.support.it1@gmail.com">g.support.it1@gmail.com</a></footer>
   </div>
 
   <script>
+    // Pestañas accesibles (teclado: ← → Inicio Fin) + link directo con #pestaña.
     (function () {
-      var tabs = document.querySelectorAll('.tab');
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
       var panels = document.querySelectorAll('.panel');
+      var lista = document.querySelector('.tabs');
+      var ancla = document.getElementById('tabsAncla');
       var heroLogo = document.getElementById('heroLogo');
-      // Logo del hero segun la pestaña. Planificador usa el logo del "Acerca de".
-      // El de Comunidad se cambia aca cuando el usuario pase su imagen (ej: 'logo_comunidad.png').
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Logo del hero según la pestaña. El de Comunidad se cambia acá cuando haya imagen propia.
       var logos = {
-        planificador: 'logo_nehemias.png',
-        comunidad: 'logo_nehemias.png',
-        ingreso: 'logo_nehemias.png'
+        planificador: 'logo_nehemias_240.webp',
+        comunidad: 'logo_nehemias_240.webp',
+        ingreso: 'logo_nehemias_240.webp'
       };
-      function activar(id) {
-        tabs.forEach(function (t) { t.classList.toggle('act', t.dataset.p === id); });
-        panels.forEach(function (p) { p.classList.toggle('act', p.id === id); });
+      function activar(id, opts) {
+        opts = opts || {};
+        tabs.forEach(function (t, i) {
+          var on = t.dataset.p === id;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          if (on) { lista.style.setProperty('--i', i); if (opts.foco) { t.focus(); } }
+        });
+        panels.forEach(function (p) {
+          var on = p.id === id;
+          p.hidden = !on;
+          p.classList.toggle('entra', on && !!opts.animar);
+        });
         if (heroLogo && logos[id]) { heroLogo.src = logos[id]; }
+        if (opts.url) { history.replaceState(null, '', '#' + id); }
+        if (opts.subir && window.scrollY > ancla.offsetTop) {
+          window.scrollTo({ top: ancla.offsetTop, behavior: reduce ? 'auto' : 'smooth' });
+        }
       }
-      tabs.forEach(function (t) {
-        t.addEventListener('click', function () {
-          activar(t.dataset.p);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () { activar(t.dataset.p, { animar: true, url: true, subir: true }); });
+        t.addEventListener('keydown', function (e) {
+          var n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+          if (n === undefined) { return; }
+          e.preventDefault();
+          n = (n + tabs.length) % tabs.length;
+          activar(tabs[n].dataset.p, { foco: true, url: true });
         });
       });
       var h = (location.hash || '').replace('#', '');
-      if (h && document.getElementById(h)) { activar(h); }
+      activar(h && document.getElementById(h) ? h : 'planificador');
     })();
 
     // Login / registro real contra el backend de Nehemías (CORS habilitado).
     (function () {
-      var API = 'https://nehemias-cartero.onrender.com';
+      var API = 'https://nehemias.site';
       var val = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; };
       function setView(v) {
         document.querySelectorAll('.lview').forEach(function (el) { el.hidden = (el.dataset.view !== v); });
+        var primero = document.querySelector('.lview[data-view="' + v + '"] .finput');
+        if (primero) { primero.focus(); }
       }
+      // 🤖 Escudo anti-bots del registro de líder (igual que en la app: dos números del 1 al 10).
+      var desafio = { a: 0, b: 0 };
+      function nuevoDesafio() {
+        desafio.a = Math.floor(Math.random() * 10) + 1;
+        desafio.b = Math.floor(Math.random() * 10) + 1;
+        document.getElementById('ld_bot_preg').textContent = '¿Cuánto es ' + desafio.a + ' + ' + desafio.b + '?';
+        document.getElementById('ld_bot').value = '';
+      }
+      nuevoDesafio();
       function msg(id, text, ok) {
         var e = document.getElementById(id);
         if (e) { e.textContent = text; e.className = 'lmsg ' + (ok ? 'ok' : 'err'); }
       }
-      document.querySelectorAll('.llink').forEach(function (b) {
-        b.addEventListener('click', function () { if (b.dataset.go) { setView(b.dataset.go); } });
+      document.querySelectorAll('.llink[data-go]').forEach(function (b) {
+        b.addEventListener('click', function () { setView(b.dataset.go); });
       });
       function post(path, body) {
         return fetch(API + path, {
@@ -653,18 +801,20 @@
       if (olv) {
         olv.addEventListener('click', function () {
           var em = val('lg_email');
-          if (!em) { msg('lg_msg', 'Escribí tu correo arriba y tocá de nuevo.', false); return; }
-          olv.style.pointerEvents = 'none';
+          if (!em) { msg('lg_msg', 'Escribí tu correo arriba y tocá de nuevo.', false); document.getElementById('lg_email').focus(); return; }
+          olv.disabled = true;
           post('/api/olvide_password', { email: em }).then(function (d) {
             if (d.status === 'success') { msg('lg_msg', 'Te enviamos un código a tu correo. Restablecé tu contraseña desde la app Nehemías.', true); }
             else { msg('lg_msg', d.message || 'No pudimos enviar el código.', false); }
-            olv.style.pointerEvents = '';
-          }).catch(function () { msg('lg_msg', 'No se pudo conectar. Probá de nuevo.', false); olv.style.pointerEvents = ''; });
+            olv.disabled = false;
+          }).catch(function () { msg('lg_msg', 'No se pudo conectar. Probá de nuevo.', false); olv.disabled = false; });
         });
       }
-      document.querySelectorAll('[data-act]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var act = btn.dataset.act;
+      document.querySelectorAll('form.lview').forEach(function (form) {
+        form.addEventListener('submit', function (ev) {
+          ev.preventDefault();
+          var act = form.dataset.act;
+          var btn = form.querySelector('.btnm');
           var orig = btn.textContent;
           var stop = function () { btn.disabled = false; btn.textContent = orig; };
           if (act === 'login') {
@@ -675,6 +825,9 @@
               if (d.status === 'success') {
                 var n = (d.user && d.user.nombre) ? d.user.nombre : '';
                 msg('lg_msg', '¡Hola' + (n ? ', ' + n : '') + '! Ingreso correcto ✅', true);
+                var ir = document.createElement('a');
+                ir.href = 'https://nehemias.site/login'; ir.className = 'lir'; ir.textContent = 'Abrir la app →';
+                document.getElementById('lg_msg').appendChild(ir);
               } else { msg('lg_msg', d.message || 'Correo o contraseña incorrectos.', false); }
               stop();
             }).catch(function () { msg('lg_msg', 'No se pudo conectar. Probá de nuevo.', false); stop(); });
@@ -688,10 +841,15 @@
               stop();
             }).catch(function () { msg('rg_msg', 'No se pudo conectar. Probá de nuevo.', false); stop(); });
           } else if (act === 'lider') {
-            var n2 = val('ld_nombre'), m2 = val('ld_min'), e2 = val('ld_email'), p2 = val('ld_pass');
-            if (!n2 || !m2 || !e2 || !p2) { msg('ld_msg', 'Completá todos los campos.', false); return; }
+            var n2 = val('ld_nombre'), ig2 = val('ld_iglesia'), m2 = val('ld_min'), e2 = val('ld_email'), p2 = val('ld_pass');
+            if (!n2 || !ig2 || !m2 || !e2 || !p2 || !val('ld_bot')) { msg('ld_msg', 'Completá todos los campos.', false); return; }
+            if (p2 !== val('ld_pass2')) { msg('ld_msg', 'Las contraseñas no coinciden.', false); document.getElementById('ld_pass2').focus(); return; }
+            if (parseInt(val('ld_bot'), 10) !== desafio.a + desafio.b) {
+              msg('ld_msg', 'Respuesta incorrecta. Demostrá que sos humano 🤖', false);
+              nuevoDesafio(); document.getElementById('ld_bot').focus(); return;
+            }
             btn.disabled = true; btn.textContent = 'Creando…';
-            post('/api/registro_admin', { nombre: n2, email: e2, password: p2, nombre_ministerio: m2 }).then(function (d) {
+            post('/api/registro_admin', { nombre: n2, email: e2, password: p2, nombre_iglesia: ig2, nombre_ministerio: m2 }).then(function (d) {
               if (d.status === 'success') { msg('ld_msg', '¡Ministerio creado! Ya podés iniciar sesión 🎉', true); }
               else { msg('ld_msg', d.message || 'No se pudo crear.', false); }
               stop();
