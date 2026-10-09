@@ -766,8 +766,8 @@
       var caja = document.getElementById('bienvenida');
       if (!caja || caja.hidden) { return; }
       var frases = caja.querySelectorAll('p');
-      var tiempos = [250, 1700, 4300];   // cuándo aparece cada frase (ms)
-      var fin = 7200;                     // cuándo se desvanece todo
+      var tiempos = [400, 3000, 8200];   // cuándo aparece cada frase (ms): tiempo para leer la anterior con calma
+      var fin = 12500;                    // cuándo se desvanece todo (~4 s para leer la última frase)
       var timers = [];
       var cerrado = false;
       frases.forEach(function (p, i) { timers.push(setTimeout(function () { p.classList.add('ver'); }, tiempos[i])); });
