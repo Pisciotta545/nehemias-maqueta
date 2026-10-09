@@ -361,14 +361,9 @@
     <button class="bv-saltar" type="button">Saltar</button>
   </div>
   <script>
-    // Se muestra una vez por visita (si recarga en la misma pestaña no se repite).
-    (function () {
-      var ya = false;
-      try { ya = sessionStorage.getItem('nehemias_bienvenida') === '1'; } catch (e) {}
-      if (ya) { return; }
-      document.getElementById('bienvenida').hidden = false;
-      document.documentElement.classList.add('intro-activa');
-    })();
+    // Se muestra cada vez que se abre o se recarga la página.
+    document.getElementById('bienvenida').hidden = false;
+    document.documentElement.classList.add('intro-activa');
   </script>
   <!-- Íconos (dibujados, mismo trazo en toda la página) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -777,7 +772,6 @@
         if (cerrado) { return; }
         cerrado = true;
         timers.forEach(clearTimeout);
-        try { sessionStorage.setItem('nehemias_bienvenida', '1'); } catch (e) {}
         caja.classList.add('fuera');
         document.documentElement.classList.remove('intro-activa');
         ['keydown', 'wheel', 'touchmove'].forEach(function (ev) { window.removeEventListener(ev, cerrar); });
