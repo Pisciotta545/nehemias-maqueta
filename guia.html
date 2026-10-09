@@ -54,7 +54,8 @@
   /* ===== Mensaje de bienvenida (se desvanece y deja ver la página) ===== */
   .bienvenida{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:24px;
     background:radial-gradient(ellipse at center,rgba(13,10,21,.7),rgba(13,10,21,.15) 70%);
-    transition:opacity .9s var(--ease),visibility 0s linear .9s;cursor:pointer;}
+    transition:opacity .9s var(--ease),visibility 0s linear .9s;
+    touch-action:none;user-select:none;-webkit-user-select:none;}  /* arrastrar el dedo mueve la red, no la página */
   .bienvenida.fuera{opacity:0;visibility:hidden;}
   .bienvenida[hidden]{display:none;}  /* sin esto, display:grid le gana a [hidden] y la capa tapa la página */
   .bienvenida-txt{max-width:640px;text-align:center;}
@@ -774,12 +775,11 @@
         timers.forEach(clearTimeout);
         caja.classList.add('fuera');
         document.documentElement.classList.remove('intro-activa');
-        ['keydown', 'wheel', 'touchmove'].forEach(function (ev) { window.removeEventListener(ev, cerrar); });
         setTimeout(function () { caja.hidden = true; }, 950);
       }
       timers.push(setTimeout(cerrar, fin));
-      caja.addEventListener('click', cerrar);       // tocar en cualquier lado (incluye "Saltar")
-      ['keydown', 'wheel', 'touchmove'].forEach(function (ev) { window.addEventListener(ev, cerrar, { passive: true }); });
+      // Solo se saltea con el botón: tocar/mover sobre el fondo interactúa con la red animada.
+      caja.querySelector('.bv-saltar').addEventListener('click', cerrar);
     })();
 
     // ===== Fondo de red animado (fijo detrás de toda la página) =====
