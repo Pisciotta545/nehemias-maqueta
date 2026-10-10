@@ -1125,7 +1125,8 @@
 
     // Login / registro real contra el backend de Nehemías (CORS habilitado).
     (function () {
-      var API = 'https://nehemias.site';
+      // En nehemias.site, mismo origen que el backend; en la maqueta, el dominio completo.
+      var API = window.__nehemiasEnDominio ? '' : 'https://nehemias.site';
       var val = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; };
       function setView(v) {
         document.querySelectorAll('.lview').forEach(function (el) { el.hidden = (el.dataset.view !== v); });
@@ -1155,6 +1156,46 @@
           body: JSON.stringify(body)
         }).then(function (r) { return r.json(); });
       }
+      // ===== Entrar a la cuenta en la app web =====
+      // La página y la app web (/login) están en el mismo dominio, así que comparten el almacenamiento
+      // del navegador. Guardamos la sesión con el MISMO formato que usa la app Flutter
+      // (SharedPreferences web = localStorage con prefijo "flutter." y valores en JSON). Al abrir /login,
+      // login_screen.dart ve remember_me + user_id y entra directo a la cuenta (PantallaPrincipal).
+      // La contraseña NO se guarda.
+      function guardarSesionApp(user, recordarCorreo, email) {
+        try {
+          var ls = window.localStorage, J = JSON.stringify;
+          ls.setItem('flutter.remember_me', 'true');
+          ls.setItem('flutter.user_id', J(user.id));
+          ls.setItem('flutter.user_nombre', J(user.nombre || ''));
+          ls.setItem('flutter.user_rol', J(user.role || 'user'));
+          if (user.equipo_id != null) { ls.setItem('flutter.equipo_id', J(user.equipo_id)); } else { ls.removeItem('flutter.equipo_id'); }
+          if (recordarCorreo) { ls.setItem('flutter.saved_email', J(email)); } else { ls.removeItem('flutter.saved_email'); }
+          ls.removeItem('flutter.saved_password');
+          return true;
+        } catch (e) { return false; }
+      }
+      function entrarALaApp(idMsg, user, recordarCorreo, email) {
+        var n = user.nombre ? ', ' + user.nombre.split(' ')[0] : '';
+        // Fuera de nehemias.site (por ej. la maqueta) no se puede compartir la sesión: dejamos el link.
+        if (!window.__nehemiasEnDominio || !guardarSesionApp(user, recordarCorreo, email)) {
+          msg(idMsg, '¡Hola' + n + '! Ingreso correcto ✅', true);
+          var ir = document.createElement('a');
+          ir.href = 'https://nehemias.site/login'; ir.className = 'lir'; ir.textContent = 'Abrir la app →';
+          document.getElementById(idMsg).appendChild(ir);
+          return;
+        }
+        msg(idMsg, '¡Hola' + n + '! Entrando a tu cuenta…', true);
+        setTimeout(function () { location.href = '/login'; }, 700);
+      }
+      // Después de registrarse, inicia sesión con los mismos datos y entra a la cuenta nueva.
+      function loginYEntrar(idMsg, email, password, textoOk, stop) {
+        return post('/api/login', { email: email, password: password }).then(function (d) {
+          if (d.status === 'success' && d.user) { entrarALaApp(idMsg, d.user, false, email); }
+          else { msg(idMsg, textoOk, true); stop(); }
+        });
+      }
+
       // ¿Olvidaste tu contraseña? -> envía el código al correo (se completa desde la app).
       var olv = document.getElementById('lg_olvido');
       if (olv) {
@@ -1181,23 +1222,21 @@
             if (!em || !pw) { msg('lg_msg', 'Completá correo y contraseña.', false); return; }
             btn.disabled = true; btn.textContent = 'Ingresando…';
             post('/api/login', { email: em, password: pw }).then(function (d) {
-              if (d.status === 'success') {
-                var n = (d.user && d.user.nombre) ? d.user.nombre : '';
-                msg('lg_msg', '¡Hola' + (n ? ', ' + n : '') + '! Ingreso correcto ✅', true);
-                var ir = document.createElement('a');
-                ir.href = 'https://nehemias.site/login'; ir.className = 'lir'; ir.textContent = 'Abrir la app →';
-                document.getElementById('lg_msg').appendChild(ir);
-              } else { msg('lg_msg', d.message || 'Correo o contraseña incorrectos.', false); }
-              stop();
+              if (d.status === 'success' && d.user) {
+                entrarALaApp('lg_msg', d.user, document.getElementById('lg_rem').checked, em);
+                if (!window.__nehemiasEnDominio) { stop(); }
+              } else { msg('lg_msg', d.message || 'Correo o contraseña incorrectos.', false); stop(); }
             }).catch(function () { msg('lg_msg', 'No se pudo conectar. Probá de nuevo.', false); stop(); });
           } else if (act === 'reg') {
             var n1 = val('rg_nombre'), e1 = val('rg_email'), p1 = val('rg_pass');
             if (!n1 || !e1 || !p1) { msg('rg_msg', 'Completá todos los campos.', false); return; }
             btn.disabled = true; btn.textContent = 'Creando…';
             post('/api/registro', { nombre: n1, email: e1, password: p1 }).then(function (d) {
-              if (d.status === 'success') { msg('rg_msg', '¡Cuenta creada! Ya podés iniciar sesión ✅', true); }
-              else { msg('rg_msg', d.message || 'No se pudo registrar.', false); }
-              stop();
+              if (d.status === 'success') {
+                btn.textContent = 'Entrando…';
+                return loginYEntrar('rg_msg', e1, p1, '¡Cuenta creada! Ya podés iniciar sesión ✅', stop);
+              }
+              msg('rg_msg', d.message || 'No se pudo registrar.', false); stop();
             }).catch(function () { msg('rg_msg', 'No se pudo conectar. Probá de nuevo.', false); stop(); });
           } else if (act === 'lider') {
             var n2 = val('ld_nombre'), ig2 = val('ld_iglesia'), m2 = val('ld_min'), e2 = val('ld_email'), p2 = val('ld_pass');
@@ -1209,9 +1248,11 @@
             }
             btn.disabled = true; btn.textContent = 'Creando…';
             post('/api/registro_admin', { nombre: n2, email: e2, password: p2, nombre_iglesia: ig2, nombre_ministerio: m2 }).then(function (d) {
-              if (d.status === 'success') { msg('ld_msg', '¡Ministerio creado! Ya podés iniciar sesión 🎉', true); }
-              else { msg('ld_msg', d.message || 'No se pudo crear.', false); }
-              stop();
+              if (d.status === 'success') {
+                btn.textContent = 'Entrando…';
+                return loginYEntrar('ld_msg', e2, p2, '¡Ministerio creado! Ya podés iniciar sesión 🎉', stop);
+              }
+              msg('ld_msg', d.message || 'No se pudo crear.', false); stop();
             }).catch(function () { msg('ld_msg', 'No se pudo conectar. Probá de nuevo.', false); stop(); });
           }
         });
