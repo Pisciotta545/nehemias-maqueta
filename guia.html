@@ -239,6 +239,30 @@
     border-radius:8px;padding:8px 0;font-size:11.5px;font-weight:800;color:#fff;}
   .nav{display:flex;justify-content:space-around;padding:10px 4px;border-top:1px solid var(--borde);font-size:16px;color:var(--texto3);}
   .nav .on{color:var(--cian);}
+  .nav.lab{padding:7px 2px 8px;}
+  .nav.lab span{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8.5px;font-weight:600;}
+  .nav.lab .ico{font-size:15px;}
+  .appbar.con-acc{display:flex;align-items:center;gap:6px;font-size:14px;}
+  .appbar .acc{margin-left:auto;display:flex;align-items:center;gap:7px;color:var(--morado-claro);font-size:15px;}
+  .mas-resalta{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--morado);color:#fff;
+    box-shadow:0 0 0 3px rgba(77,208,225,.7);}
+  .toca{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin:-4px 34px 6px 0;font-size:10.5px;color:var(--cian);font-weight:600;}
+  .toca b{color:var(--cian);}
+  .appbar.con-atras{display:flex;align-items:center;gap:8px;font-size:13.5px;}
+  .appbar.con-atras .ico{font-size:15px;color:var(--texto2);flex:0 0 auto;}
+  .bt2s{display:flex;gap:6px;margin:0 0 9px;}
+  .mk .bt2s{margin:8px 0 0;}
+  .bt2{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;background:var(--grad);color:#fff;border-radius:8px;
+    font-size:9.5px;font-weight:800;padding:8px 4px;letter-spacing:.02em;}
+  .arrastre{color:var(--texto3);margin-right:2px;}
+  .mlabel.con-tuerca{display:flex;align-items:center;justify-content:space-between;}
+  .mlabel.con-tuerca .ico{color:var(--cian);font-size:14px;}
+  .tuerca-txt{vertical-align:-3px;color:var(--cian);}
+  .camino{list-style:none;counter-reset:cam;padding:0;margin:14px 0 4px;display:flex;flex-wrap:wrap;gap:6px 4px;align-items:center;}
+  .camino li{counter-increment:cam;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
+    background:rgba(112,0,255,.14);border:1px solid rgba(180,140,255,.28);font-size:13.5px;color:var(--texto2);line-height:1.3;}
+  .camino li::before{content:counter(cam);font:800 11px var(--f-titulo);color:var(--morado-claro);}
+  .camino li:not(:last-child)::after{content:"\2192";margin-left:4px;color:var(--texto3);}
 
   /* ===== Botones de tienda ===== */
   .stores{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:48px 0 0;}
@@ -467,6 +491,10 @@
     <symbol id="i-compartir" viewBox="0 0 24 24"><path d="M12 2v13M8 6l4-4 4 4"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></symbol>
     <symbol id="i-agregar" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/></symbol>
+    <symbol id="i-tuerca" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+    <symbol id="i-lista" viewBox="0 0 24 24"><path d="M3 6h18M3 12h12M3 18h16"/></symbol>
+    <symbol id="i-arriba" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
     <symbol id="i-bateria" viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/></symbol>
   </svg>
 
@@ -512,18 +540,47 @@
       <div class="fase"><h2>Primero: armá tu estructura</h2><p>Se configura una vez, al empezar.</p></div>
 
       <div class="serie">
+        <!-- Empezar: pestaña Tareas + -->
+        <div class="paso">
+          <div class="ftxt">
+            <div class="ptit"><span class="num" aria-hidden="true">1</span><h3><span class="sr">Paso 1: </span>Entrá a Tareas y tocá el +</h3></div>
+            <p>Iniciá sesión con tu cuenta de <b>líder</b>. Abajo tocá la pestaña <b>Tareas</b> y arriba a la derecha el <b>+</b>: se abre <b>Crear Nuevo Culto</b>. Desde ahí armás todo lo que sigue.</p>
+            <ol class="camino" aria-label="Camino dentro de la app">
+              <li>Pestaña <b>Tareas</b></li>
+              <li><b>+</b> arriba a la derecha</li>
+              <li><b>Crear Nuevo Culto</b></li>
+              <li>Tuerca <svg class="ico tuerca-txt" aria-hidden="true"><use href="#i-tuerca"/></svg> junto a "Planificador de áreas"</li>
+              <li><b>Gestión de Planificadores</b></li>
+            </ol>
+            <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ojo:</b> el <b>+</b> aparece solo en las cuentas de <b>líder</b>. Si no lo ves, tu cuenta es de servidor.</span></div>
+          </div>
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo de la pestaña Tareas con el botón + resaltado arriba a la derecha"><div class="notch"></div><div class="scr">
+            <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
+            <div class="appbar con-acc"><span>Culto Domingo</span><span class="acc"><svg class="ico"><use href="#i-reloj"/></svg><span class="mas-resalta"><svg class="ico"><use href="#i-mas"/></svg></span><svg class="ico"><use href="#i-perfil"/></svg></span></div>
+            <div class="toca">Tocá el <b>+</b><svg class="ico"><use href="#i-arriba"/></svg></div>
+            <div class="scrbody">
+              <div class="mk"><div class="t">Dom 20-07 · 10:00 hs</div>
+                <div class="rowli"><b>Cámara</b><span class="free">+ asignar</span></div>
+                <div class="rowli"><b>Sonido</b><span class="free">+ asignar</span></div>
+                <div class="rowli"><b>Luces</b><span class="free">+ asignar</span></div>
+              </div>
+            </div>
+            <div class="nav lab"><span><svg class="ico"><use href="#i-cal"/></svg>Servicio</span><span><svg class="ico"><use href="#i-lista"/></svg>Cultos</span><span class="on"><svg class="ico"><use href="#i-plan"/></svg>Tareas</span><span><svg class="ico"><use href="#i-equipo"/></svg>Equipo</span><span><svg class="ico"><use href="#i-info"/></svg>Acerca</span></div>
+          </div></div>
+        </div>
+
         <!-- Crear áreas -->
         <div class="paso">
           <div class="ftxt">
-            <div class="ptit"><span class="num" aria-hidden="true">1</span><h3><span class="sr">Paso 1: </span>Creá las áreas de tu equipo</h3></div>
-            <p>Son los <b>puestos</b> donde sirve tu gente. Escribís el nombre y tocás <b>+</b>. Quedan guardadas para reusarlas en todos tus cultos.</p>
+            <div class="ptit"><span class="num" aria-hidden="true">2</span><h3><span class="sr">Paso 2: </span>Creá las áreas de tu equipo</h3></div>
+            <p>En <b>Crear Nuevo Culto</b> tocá la tuerca <svg class="ico tuerca-txt" aria-hidden="true"><use href="#i-tuerca"/></svg> y después <b>MIS ÁREAS</b>. Las áreas son los <b>puestos</b> donde sirve tu gente: escribís el nombre y tocás <b>+</b>. Quedan guardadas para reusarlas en todos tus cultos.</p>
             <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> en Multimedia creás <b>Cámara</b>, <b>Sonido</b>, <b>Luces</b> y <b>Proyección</b>.</span></div>
           </div>
-          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Mis Áreas» con las áreas Cámara, Sonido, Luces y Proyección"><div class="notch"></div><div class="scr">
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Mis Áreas Globales» con las áreas Cámara, Sonido, Luces y Proyección"><div class="notch"></div><div class="scr">
             <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
-            <div class="appbar">Mis Áreas</div>
+            <div class="appbar con-atras"><svg class="ico"><use href="#i-volver"/></svg><span>Mis Áreas Globales</span></div>
             <div class="scrbody">
-              <div class="inrow"><div class="field">Nueva área (Ej: Servidores)</div><div class="plus"><svg class="ico"><use href="#i-mas"/></svg></div></div>
+              <div class="inrow"><div class="field">Nueva Área (Ej: Servidores)</div><div class="plus"><svg class="ico"><use href="#i-mas"/></svg></div></div>
               <div class="mk">
                 <div class="rowli"><b>Cámara</b><span class="free"><svg class="ico"><use href="#i-basura"/></svg></span></div>
                 <div class="rowli"><b>Sonido</b><span class="free"><svg class="ico"><use href="#i-basura"/></svg></span></div>
@@ -531,71 +588,69 @@
                 <div class="rowli"><b>Proyección</b><span class="free"><svg class="ico"><use href="#i-basura"/></svg></span></div>
               </div>
             </div>
-            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico"><use href="#i-cal"/></svg><svg class="ico on"><use href="#i-capas"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
           </div></div>
         </div>
 
         <!-- Crear planificador -->
         <div class="paso">
           <div class="ftxt">
-            <div class="ptit"><span class="num" aria-hidden="true">2</span><h3><span class="sr">Paso 2: </span>Creá un planificador (plantilla)</h3></div>
-            <p>Un <b>planificador</b> es una <b>plantilla reutilizable</b> para un tipo de culto. Le ponés un nombre y tocás <b>+</b>. Después le cargás las áreas (paso 3).</p>
+            <div class="ptit"><span class="num" aria-hidden="true">3</span><h3><span class="sr">Paso 3: </span>Creá un planificador (plantilla)</h3></div>
+            <p>Volvé a <b>Gestión de Planificadores</b>. Un <b>planificador</b> es una <b>plantilla reutilizable</b> para un tipo de culto: escribís el nombre y tocás <b>CREAR PLAN.</b> Aparece abajo, en la lista.</p>
             <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> creás <b>“Culto Domingo”</b> y <b>“Culto Joven”</b>, porque cada uno usa áreas distintas.</span></div>
           </div>
-          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Planificadores» con Culto Domingo, Culto Joven y Reunión de oración"><div class="notch"></div><div class="scr">
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Gestión de Planificadores» con los botones Crear plan y Mis áreas, y los planificadores Culto Domingo y Culto Joven"><div class="notch"></div><div class="scr">
             <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
-            <div class="appbar">Planificadores</div>
+            <div class="appbar con-atras"><svg class="ico"><use href="#i-volver"/></svg><span>Gestión de Planificadores</span></div>
             <div class="scrbody">
-              <div class="inrow"><div class="field">Nombre (Ej: Culto Joven)</div><div class="plus"><svg class="ico"><use href="#i-mas"/></svg></div></div>
-              <div class="mk">
-                <div class="rowli"><b><svg class="ico"><use href="#i-plan"/></svg>Culto Domingo</b><span class="ok2">3 áreas</span></div>
-                <div class="rowli"><b><svg class="ico"><use href="#i-plan"/></svg>Culto Joven</b><span class="ok2">2 áreas</span></div>
-                <div class="rowli"><b><svg class="ico"><use href="#i-plan"/></svg>Reunión de oración</b><span class="wait">sin áreas</span></div>
-              </div>
+              <div class="field">Nombre del planificador (Ej: Culto Joven)</div>
+              <div class="bt2s"><span class="bt2">CREAR PLAN.</span><span class="bt2">MIS ÁREAS <svg class="ico"><use href="#i-tuerca"/></svg></span></div>
+              <div class="mk"><div class="t">Culto Domingo</div><div class="s">Cámara (2), Sonido (1), Luces (1)</div><div class="bt2s"><span class="bt2">CONFIGURAR ÁREAS</span></div></div>
+              <div class="mk"><div class="t">Culto Joven</div><div class="s wait">Sin áreas configuradas</div></div>
             </div>
-            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico on"><use href="#i-cal"/></svg><svg class="ico"><use href="#i-capas"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
           </div></div>
         </div>
 
         <!-- Configurar planificador -->
         <div class="paso">
           <div class="ftxt">
-            <div class="ptit"><span class="num" aria-hidden="true">3</span><h3><span class="sr">Paso 3: </span>Cargale las áreas y cuántas personas</h3></div>
-            <p>Entrás al planificador y le agregás las <b>áreas</b> (las que creaste en el paso 1) con la <b>cantidad</b> de personas que necesitás en cada una.</p>
+            <div class="ptit"><span class="num" aria-hidden="true">4</span><h3><span class="sr">Paso 4: </span>Cargale las áreas y cuántas personas</h3></div>
+            <p>En la tarjeta del planificador tocá <b>CONFIGURAR ÁREAS</b>. Elegís un <b>área</b> (de las del paso 2), ponés la <b>cantidad</b> de personas y tocás <b>VINCULAR ÁREA</b>. Repetís con cada área; arrastrando ☰ las ordenás.</p>
             <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> a <b>“Culto Domingo”</b> le ponés <b>Cámara ×2</b>, <b>Sonido ×1</b> y <b>Luces ×1</b>.</span></div>
           </div>
-          <div class="phone" role="img" aria-label="Pantalla de ejemplo del planificador «Culto Domingo» con Cámara ×2, Sonido ×1 y Luces ×1"><div class="notch"></div><div class="scr">
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo para configurar el planificador «Culto Domingo»: elegir área y cantidad, vincular, y la estructura con Cámara ×2 y Sonido ×1"><div class="notch"></div><div class="scr">
             <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
-            <div class="appbar">Culto Domingo</div>
+            <div class="appbar con-atras"><svg class="ico"><use href="#i-volver"/></svg><span>Culto Domingo</span></div>
             <div class="scrbody">
-              <div class="mk nota">Elegí un área y su cantidad:</div>
-              <div class="arow"><div class="an">Cámara<svg class="ico"><use href="#i-abajo"/></svg></div><div class="qty">×2</div></div>
-              <div class="arow"><div class="an">Sonido<svg class="ico"><use href="#i-abajo"/></svg></div><div class="qty">×1</div></div>
-              <div class="arow"><div class="an">Luces<svg class="ico"><use href="#i-abajo"/></svg></div><div class="qty">×1</div></div>
-              <div class="mk mas">+ Agregar área</div>
+              <div class="mlabel">Asignar área a la plantilla:</div>
+              <div class="arow"><div class="an">Luces<svg class="ico"><use href="#i-abajo"/></svg></div><div class="qty">1</div></div>
+              <div class="btnm">VINCULAR ÁREA ✓</div>
+              <div class="mlabel">Estructura actual de la plantilla:</div>
+              <div class="mk">
+                <div class="rowli"><b><span class="arrastre">☰</span>Cámara</b><span class="ok2">×2</span></div>
+                <div class="rowli"><b><span class="arrastre">☰</span>Sonido</b><span class="ok2">×1</span></div>
+              </div>
             </div>
-            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico on"><use href="#i-cal"/></svg><svg class="ico"><use href="#i-capas"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
           </div></div>
         </div>
 
         <!-- Crear culto -->
         <div class="paso">
           <div class="ftxt">
-            <div class="ptit"><span class="num" aria-hidden="true">4</span><h3><span class="sr">Paso 4: </span>Creá el culto con esa plantilla</h3></div>
-            <p>Ponés <b>nombre</b> y <b>fecha</b>, elegís el <b>planificador</b> y listo: el culto nace con todas las áreas y sus cupos, listas para asignar servidores.</p>
+            <div class="ptit"><span class="num" aria-hidden="true">5</span><h3><span class="sr">Paso 5: </span>Creá el culto con esa plantilla</h3></div>
+            <p>Volvé a <b>Crear Nuevo Culto</b>. Ponés <b>nombre</b> y <b>fecha</b>, elegís el <b>planificador</b> y, si se repite, cuántas <b>semanas</b> más. Tocás <b>CREAR CULTO</b> y el culto nace con todas las áreas y sus cupos, listas para asignar servidores.</p>
             <div class="ej"><svg class="ico" aria-hidden="true"><use href="#i-idea"/></svg><span><b>Ejemplo:</b> creás <b>“Culto Domingo · 20-07”</b> con esa plantilla y aparecen solas las áreas Cámara ×2, Sonido ×1 y Luces ×1.</span></div>
           </div>
-          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Crear Culto» con nombre, fecha y planificador Culto Domingo"><div class="notch"></div><div class="scr">
+          <div class="phone" role="img" aria-label="Pantalla de ejemplo «Crear Nuevo Culto» con nombre, fecha, planificador Culto Domingo, semanas a repetir y el botón Crear culto"><div class="notch"></div><div class="scr">
             <div class="stbar"><span>9:41</span><span><svg class="ico"><use href="#i-senal"/></svg><svg class="ico"><use href="#i-bateria"/></svg></span></div>
-            <div class="appbar">Crear Culto</div>
+            <div class="appbar con-atras"><svg class="ico"><use href="#i-volver"/></svg><span>Crear Nuevo Culto</span></div>
             <div class="scrbody">
               <div class="field">Nombre (Ej: Culto Domingo)</div>
-              <div class="field"><svg class="ico"><use href="#i-cal"/></svg>Fecha (DD-MM-AAAA)</div>
-              <div class="mlabel">Planificador de áreas:</div>
+              <div class="field dd">Fecha (DD-MM-AAAA)<svg class="ico"><use href="#i-cal"/></svg></div>
+              <div class="mlabel con-tuerca">Planificador de áreas:<svg class="ico"><use href="#i-tuerca"/></svg></div>
               <div class="field dd">Culto Domingo<svg class="ico"><use href="#i-abajo"/></svg></div>
-              <div class="btnm">CREAR CULTO</div>
+              <div class="field">Repetir semanas (0 a 10)</div>
+              <div class="btnm">CREAR CULTO ✓</div>
             </div>
-            <div class="nav"><svg class="ico"><use href="#i-servicio"/></svg><svg class="ico on"><use href="#i-cal"/></svg><svg class="ico"><use href="#i-capas"/></svg><svg class="ico"><use href="#i-perfil"/></svg></div>
           </div></div>
         </div>
       </div>
