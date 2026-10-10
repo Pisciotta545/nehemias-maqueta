@@ -26,7 +26,9 @@
     window.__nehemiasEnDominio = enDominio;
     if (!enDominio) { return; }
     // Si se abre desde el ícono ya instalado (pantalla completa), ir directo a la app.
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    // Excepción: "?guia" (link "¿Primera vez? Mirá cómo funciona" del login de la app) muestra la guía.
+    var pideGuia = /[?&]guia\b/.test(location.search);
+    if (!pideGuia && (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true)) {
       location.replace('/login');
       return;
     }
