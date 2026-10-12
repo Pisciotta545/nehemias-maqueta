@@ -43,6 +43,35 @@
     });
   })();
 </script>
+<script>
+  // 📊 Estadísticas anónimas (se ven en nehemias.site/estadisticas). Solo cuenta en nehemias.site,
+  // nunca en la maqueta, y no cuenta en el navegador del dueño (cookie "nehemias_no_contar").
+  // "visitante" es un id aleatorio de este navegador: sin nombre, correo ni IP.
+  (function () {
+    var visitante = '';
+    try { visitante = localStorage.getItem('nehemias_visitante') || ''; } catch (e) {}
+    if (!/^[a-f0-9]{16,40}$/.test(visitante)) {
+      var b = new Uint8Array(16);
+      window.crypto.getRandomValues(b);
+      visitante = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+      try { localStorage.setItem('nehemias_visitante', visitante); } catch (e) {}
+    }
+    var params = new URLSearchParams(location.search);
+    // De dónde viene: ?de=whatsapp (o utm_source); ?guia = link del login de la app.
+    var fuente = params.get('de') || params.get('utm_source') || (params.has('guia') ? 'app' : '');
+    var activo = window.__nehemiasEnDominio && !/(?:^|;\s*)nehemias_no_contar=1/.test(document.cookie);
+    window.nehemiasRegistrar = function (evento) {
+      if (!activo) { return; }
+      try {
+        fetch('/api/visita', {
+          method: 'POST', keepalive: true,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ evento: evento, visitante: visitante, ref: document.referrer, fuente: fuente })
+        }).catch(function () {});
+      } catch (e) {}
+    };
+  })();
+</script>
 <meta property="og:url" content="https://nehemias.site/" />
 <meta property="og:image" content="https://nehemias.site/og_nehemias.jpg?v=3" />
 <meta property="og:image:width" content="1200" />
@@ -1114,6 +1143,7 @@
         if (typeof hoja.showModal === 'function') { hoja.showModal(); } else { location.href = 'https://nehemias.site/login'; }
       }
       btn.addEventListener('click', function () {
+        window.nehemiasRegistrar('instalar');
         var p = window.__promptInstalar;
         if (!p) { mostrarHoja(); return; }
         window.__promptInstalar = null;          // el aviso del sistema se puede usar una sola vez
@@ -1147,8 +1177,10 @@
         comunidad: 'logo_nehemias_240.webp',
         ingreso: 'logo_nehemias_240.webp'
       };
+      var actual = '';
       function activar(id, opts) {
         opts = opts || {};
+        if (id !== actual) { actual = id; window.nehemiasRegistrar('tab_' + id); }  // 📊 vista de pestaña
         tabs.forEach(function (t, i) {
           var on = t.dataset.p === id;
           t.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -1177,6 +1209,7 @@
         });
       });
       var h = (location.hash || '').replace('#', '');
+      window.nehemiasRegistrar('pagina');  // 📊 abrieron la página
       activar(h && document.getElementById(h) ? h : 'planificador');
     })();
 
@@ -1280,6 +1313,7 @@
             btn.disabled = true; btn.textContent = 'Ingresando…';
             post('/api/login', { email: em, password: pw }).then(function (d) {
               if (d.status === 'success' && d.user) {
+                window.nehemiasRegistrar('login');
                 entrarALaApp('lg_msg', d.user, document.getElementById('lg_rem').checked, em);
                 if (!window.__nehemiasEnDominio) { stop(); }
               } else { msg('lg_msg', d.message || 'Correo o contraseña incorrectos.', false); stop(); }
@@ -1291,6 +1325,7 @@
             post('/api/registro', { nombre: n1, email: e1, password: p1 }).then(function (d) {
               if (d.status === 'success') {
                 btn.textContent = 'Entrando…';
+                window.nehemiasRegistrar('registro_servidor');
                 return loginYEntrar('rg_msg', e1, p1, '¡Cuenta creada! Ya podés iniciar sesión ✅', stop);
               }
               msg('rg_msg', d.message || 'No se pudo registrar.', false); stop();
@@ -1307,6 +1342,7 @@
             post('/api/registro_admin', { nombre: n2, email: e2, password: p2, nombre_iglesia: ig2, nombre_ministerio: m2 }).then(function (d) {
               if (d.status === 'success') {
                 btn.textContent = 'Entrando…';
+                window.nehemiasRegistrar('registro_lider');
                 return loginYEntrar('ld_msg', e2, p2, '¡Ministerio creado! Ya podés iniciar sesión 🎉', stop);
               }
               msg('ld_msg', d.message || 'No se pudo crear.', false); stop();
